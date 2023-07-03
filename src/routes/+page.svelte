@@ -6,19 +6,25 @@
 	import categoryWritable from "$lib/store/firebase-store/category.firebase.store";
 	import { Badge, Card, Indicator } from "flowbite-svelte";
 	import itemsWritable from "$lib/store/firebase-store/items.firebase.store";
-	import { HeartOutline } from "flowbite-svelte-icons";
+	import { HeartOutline, MinusSolid, PlusSolid } from "flowbite-svelte-icons";
 
     onMount(async () => {
         console.log('Page mounted');
         console.log("Categories", $categoryWritable.categories);
     });
+
+    let expanded = false;
+
+  function toggle() {
+    expanded = !expanded;
+  }
 </script>
 
 <div class="p-12">
   <CardsImagesCarousel />
 </div>
   <div class="flex justify-center w-full">
-    <Badge border color="blue" class="text-2xl font-bold text-gray-100" ><span class="dark:text-gray-50 text-gray-800 p-1 px-4">
+    <Badge border color="blue" class="text-2xl font-bold text-gray-100 rounded-3xl" ><span class="dark:text-gray-50 text-gray-800 p-1 px-4">
       Categories
     </span></Badge>
   </div>
@@ -41,7 +47,7 @@
   
   
   <div class="flex justify-center w-full mt-4">
-    <Badge border color="dark" class="text-2xl font-bold text-gray-100" ><span class="dark:text-gray-50 text-gray-800 p-1 px-4">
+    <Badge border color="dark" class="text-2xl font-bold text-gray-100 rounded-3xl" ><span class="dark:text-gray-50 text-gray-800 p-1 px-4">
       Popular Items
     </span></Badge>
   </div>
@@ -61,11 +67,20 @@
             {items.name}
           </h5>
         </a>
-        <span class="text-xl font-medium">{items.price} IQD</span>
+        <span class="text-xl font-medium ">{items.price} IQD</span>
       </div>
-      <div class="relative justify-start w-20 left-0 bg-blue-400 bg-opacity-700 mt-auto">
-        <button class="text-3xl font-bold text-gray-800">+</button>
-      </div>
+      <div class="flex justify-center w-[18%] bg-blue-400 bg-opacity-700 rounded-full items-center transition-all duration-500" 
+     style="width: {expanded ? '50%' : '18%'}">
+  {#if expanded}
+  <div class="flex justify-between w-full">
+    <button on:click={toggle} class="justify-start p-2"><PlusSolid class="dark:hover:text-orange-500 hover:text-orange-600 text-gray-600 transition-all"/></button>
+    <span class="flex justify-center items-center text-xl text-center font-bold dark:text-gray-100">1</span>
+    <button on:click={toggle}  class="justify-end p-2"><MinusSolid class="dark:hover:text-orange-500 hover:text-orange-600 text-gray-600 transition-all"/></button>
+  </div>
+  {:else}
+  <button on:click={toggle}  class="text-3xl font-boldflex justify-center p-2"><PlusSolid class="dark:hover:text-orange-500 hover:text-orange-600 text-gray-600 transition-all"/></button>
+  {/if}
+</div>
     </Card>
         {/each}
       </div>  

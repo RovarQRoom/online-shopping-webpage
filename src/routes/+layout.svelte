@@ -23,10 +23,9 @@
   }
 </script>
 
-{#if $categoryWritable && $itemsWritable}
+{#if $categoryWritable.categories && $itemsWritable.items}
 <main class="bg-slate-100 dark:bg-gray-950">
-  <div class="w-full h-full">
-    <Navbar let:hidden let:toggle>
+    <Navbar let:hidden let:toggle class="fixed z-30">
         <NavBrand href="/">
           <img
             src="{kubakLogo}"
@@ -64,7 +63,7 @@
         <NavUl {hidden} class="w-full">
           <NavLi href="/" active={true}>Home</NavLi>
           <NavLi id="nav-menu1" class="cursor-pointer"><Chevron aligned>Categories</Chevron></NavLi>
-          <Dropdown triggeredBy="#nav-menu1" class="z-20 w-52 overflow-y-auto h-48">
+          <Dropdown triggeredBy="#nav-menu1" class="z-20 w-52 overflow-y-auto overflow-x-hidden h-48 scrollbar-thumb-orange-600 scrollbar-track-gray-100 scrollbar-thin scrollbar-thumb-rounded-3xl scrollbar-track-rounded-3xl">
             {#each $categoryWritable.categories as category}
             <li class="rounded p-2 hover:bg-gray-100 dark:hover:bg-gray-600">
               <Checkbox>{category.name}</Checkbox>
@@ -84,11 +83,13 @@
             {/if}
           </NavUl>
         </Navbar>
+      </main>
+      <div class="mt-4">
+        <slot />
       </div>
-      
-  <slot />
-</main>
 {:else}
-<h1>Loading</h1>
+<main class="bg-slate-100 dark:bg-gray-950">
+  <h1>Loading</h1>
+</main>
 {/if}
 
