@@ -1,6 +1,6 @@
 <script lang="ts">
 	import '../app.postcss';
-	import { Navbar, NavBrand, NavLi, NavUl, NavHamburger, Button, Input, Search, DarkMode } from 'flowbite-svelte';
+	import { Navbar, NavBrand, NavLi, NavUl, NavHamburger, Button, Input, Search, DarkMode, Dropdown, DropdownItem, DropdownDivider, Chevron, Checkbox, Helper } from 'flowbite-svelte';
   import { CartOutline, UserCircleSolid } from 'flowbite-svelte-icons';
 	import { kubakLogo } from '../components/Images/kubak.logo';
 	import { onMount } from 'svelte';
@@ -63,7 +63,15 @@
         </DarkMode>
         <NavUl {hidden} class="w-full">
           <NavLi href="/" active={true}>Home</NavLi>
-          <NavLi href="/about">Categories</NavLi>
+          <NavLi id="nav-menu1" class="cursor-pointer"><Chevron aligned>Categories</Chevron></NavLi>
+          <Dropdown triggeredBy="#nav-menu1" class="z-20 w-52 overflow-y-auto h-48">
+            {#each $categoryWritable.categories as category}
+            <li class="rounded p-2 hover:bg-gray-100 dark:hover:bg-gray-600">
+              <Checkbox>{category.name}</Checkbox>
+            </li>
+            {/each}
+            <DropdownItem slot="footer" class="text-center cursor-pointer dark:hover:text-orange-500 transition-all" href="/search">Search</DropdownItem>
+          </Dropdown>
           <NavLi href="/services">Services</NavLi>
           {#if screenWidth <= 1280}
           <NavLi href="/" class="flex flex-row items-center">

@@ -35,9 +35,10 @@ import { browser } from '$app/environment';
   autoplayDuration={10000}
   arrows={false}
   dots={false}
+  class="rounded-lg"
   >
     {#each images as image}
-      <Img href={image.attribution} src={image.imgurl} alt="" class="object-cover w-full h-[35rem] "/>
+      <Img href={image.attribution} src={image.imgurl} alt="" class="object-cover w-full h-[35rem] rounded-3xl px-2"/>
     {/each}
   </Carousel>
 {/if}
