@@ -36,7 +36,7 @@
   
   
   <h1 class="flex font-bold justify-start ml-40 text-2xl tracking-wide text-gray-900 dark:text-white">Popular Items</h1>
-  <div class="grid xl:grid-cols-5 lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 w-full justify-center items-center">
+  <div class="grid xl:grid-cols-5 lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1">
     {#each $itemsWritable.items as items}
         <Card padding="sm" class="m-2 flex justify-center items-center" color="blue" >
             <a href="/">
