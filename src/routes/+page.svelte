@@ -1,23 +1,58 @@
-<script>
-	import { onMount } from "svelte";
-
-
+<script lang="ts">
+	import type { Items } from './../lib/DTO/Items.DTO';
 	import CardsImagesCarousel from "../components/image-components/Cards-Images-Carousel.components.svelte";
 	import categoryWritable from "$lib/store/firebase-store/category.firebase.store";
-	import { Badge, Card, Indicator } from "flowbite-svelte";
-	import itemsWritable from "$lib/store/firebase-store/items.firebase.store";
+	import { Badge, Card } from "flowbite-svelte";
+	import itemsWritable, { itemsHandlers } from "$lib/store/firebase-store/items.firebase.store";
 	import { HeartOutline, MinusSolid, PlusSolid } from "flowbite-svelte-icons";
+	import cart, { cartHandlers } from '$lib/store/carts.store';
+	import { onMount } from 'svelte';
 
-    onMount(async () => {
-        console.log('Page mounted');
-        console.log("Categories", $categoryWritable.categories);
-    });
+onMount(async () => {
+  console.log('Cart mounted');
 
-    let expanded = false;
-
-  function toggle() {
-    expanded = !expanded;
+  // get all data into the cart
+  let saveData:any = localStorage.getItem('cart');
+  if(saveData){
+    saveData = JSON.parse(saveData ?? "") as Items[] ?? [];
+    console.log("Cart Data", saveData);
+    
+    cartHandlers.getAllDataIntoCart(saveData);
+  
+    console.log("Cart Data In Reality", $cart);
   }
+
+
+  cart.subscribe((value) => {
+    localStorage.setItem("cart", JSON.stringify(value));
+  });
+  // localStorage.clear();
+});
+
+async function addItemToCart(item: Items) {
+        // if the item is not in the cart, add it to the cart
+       cartHandlers.addToCart(item);
+
+       console.log("Checking Condition",$cart.some((i) => i.id === item.id));
+       
+       isInCart(item);
+}
+
+function removeItemFromCart(item: Items) {
+        // if the item is in the cart, remove it from the cart
+        cartHandlers.removeFromCart(item);
+}
+
+  // a function to check if an item is in the cart or not
+  function isInCart(item: Items) {
+    console.log("Item", $cart);
+    console.log(
+      "Checking if item is in cart",
+      $cart.some((i) => i.id === item.id)
+    );
+      return $cart.some((i) => i.id === item.id);
+  }
+
 </script>
 
 <div class="p-12">
@@ -53,6 +88,7 @@
   </div>
   <!-- <h1 class="flex font-bold justify-center text-2xl tracking-wide text-gray-900 dark:text-white">Popular Items</h1> -->
   <div class="grid xl:grid-cols-5 lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 justify-items-center">
+    {#if $cart}
     {#each $itemsWritable.items as items}
     <Card padding="sm" class="m-2 flex flex-col justify-between items-center rounded-[3rem]" color="dark" >
       <div class="flex justify-start items-start w-full">
@@ -70,17 +106,20 @@
         <span class="text-xl font-medium ">{items.price} IQD</span>
       </div>
       <div class="flex justify-center w-[18%] bg-blue-400 bg-opacity-700 rounded-full items-center transition-all duration-500" 
-     style="width: {expanded ? '50%' : '18%'}">
-  {#if expanded}
+     style="width: {$cart.some((i) => i.id === items.id) ? '50%' : '18%'}">
+  {#if $cart.some((i) => i.id === items.id)}
   <div class="flex justify-between w-full">
-    <button on:click={toggle} class="justify-start p-2"><PlusSolid class="dark:hover:text-orange-500 hover:text-orange-600 text-gray-600 transition-all"/></button>
-    <span class="flex justify-center items-center text-xl text-center font-bold dark:text-gray-100">1</span>
-    <button on:click={toggle}  class="justify-end p-2"><MinusSolid class="dark:hover:text-orange-500 hover:text-orange-600 text-gray-600 transition-all"/></button>
+    <button on:click={()=>{addItemToCart(items);
+    }} class="justify-start p-2"><PlusSolid class="dark:hover:text-orange-500 hover:text-orange-600 text-gray-600 transition-all"/></button>
+    <span class="flex justify-center items-center text-xl text-center font-bold dark:text-gray-100">{($cart.find(i => i.id === items.id))?.quantity}</span>
+    <button on:click={()=>{removeItemFromCart(items);
+    }}  class="justify-end p-2"><MinusSolid class="dark:hover:text-orange-500 hover:text-orange-600 text-gray-600 transition-all"/></button>
   </div>
   {:else}
-  <button on:click={toggle}  class="text-3xl font-boldflex justify-center p-2"><PlusSolid class="dark:hover:text-orange-500 hover:text-orange-600 text-gray-600 transition-all"/></button>
+  <button on:click={()=>{addItemToCart(items)}}  class="text-3xl font-boldflex justify-center p-2"><PlusSolid class="dark:hover:text-orange-500 hover:text-orange-600 text-gray-600 transition-all"/></button>
   {/if}
 </div>
-    </Card>
-        {/each}
-      </div>  
+</Card>
+{/each}
+{/if}
+</div>  

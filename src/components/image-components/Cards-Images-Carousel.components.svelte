@@ -22,9 +22,6 @@ import { browser } from '$app/environment';
                 attribution: card.webpage_url,
             }
         }) ;
-
-        console.log(images);
-        
     });
 </script>
 

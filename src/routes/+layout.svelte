@@ -24,7 +24,7 @@
 </script>
 
 {#if $categoryWritable.categories && $itemsWritable.items}
-<main class="bg-slate-100 dark:bg-gray-950">
+<main class="bg-slate-100 dark:bg-gray-950 w-full h-full">
     <Navbar let:hidden let:toggle class="fixed z-30">
         <NavBrand href="/">
           <img
@@ -65,7 +65,7 @@
           <NavLi id="nav-menu1" class="cursor-pointer"><Chevron aligned>Categories</Chevron></NavLi>
           <Dropdown triggeredBy="#nav-menu1" class="z-20 w-52 overflow-y-auto overflow-x-hidden h-48 scrollbar-thumb-orange-600 scrollbar-track-gray-100 scrollbar-thin scrollbar-thumb-rounded-3xl scrollbar-track-rounded-3xl">
             {#each $categoryWritable.categories as category}
-            <li class="rounded p-2 hover:bg-gray-100 dark:hover:bg-gray-600">
+            <li class="rounded p-2 hover:bg-gray-100 dark:hover:bg-gray-600 ">
               <Checkbox>{category.name}</Checkbox>
             </li>
             {/each}
@@ -83,10 +83,10 @@
             {/if}
           </NavUl>
         </Navbar>
+        <div >
+          <slot />
+        </div>
       </main>
-      <div class="mt-4">
-        <slot />
-      </div>
 {:else}
 <main class="bg-slate-100 dark:bg-gray-950">
   <h1>Loading</h1>

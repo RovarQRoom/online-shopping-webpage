@@ -102,8 +102,6 @@ export const cardsHandlers = {
 			// Set the item data to the writable store
 			cardsWritable.set({ cards: cardData, total: totalCount });
 
-			console.log('Card Data', cardData);
-
 			return {
 				cardsData: cardData,
 				totalPages
