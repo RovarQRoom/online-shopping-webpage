@@ -1,12 +1,20 @@
 <script lang="ts">
 	import '../app.postcss';
-	import { Navbar, NavBrand, NavLi, NavUl, NavHamburger, Button, Input, Search, DarkMode, Dropdown, DropdownItem, DropdownDivider, Chevron, Checkbox, Helper } from 'flowbite-svelte';
+	import { Navbar, NavBrand, NavLi, NavUl, NavHamburger, Button, Input, Search, DarkMode, Dropdown, DropdownItem, DropdownDivider, Chevron, Checkbox, Helper, Drawer, CloseButton } from 'flowbite-svelte';
   import { CartOutline, UserCircleSolid } from 'flowbite-svelte-icons';
 	import { kubakLogo } from '../components/Images/kubak.logo';
 	import { onMount } from 'svelte';
 	import { categoryHandlers, itemsHandlers } from '$lib/store/firebase-store';
 	import categoryWritable from '$lib/store/firebase-store/category.firebase.store';
 	import itemsWritable from '$lib/store/firebase-store/items.firebase.store';
+  import { sineIn } from 'svelte/easing';
+
+  let hidden6 = true;
+  let transitionParamsRight = {
+    x: 320,
+    duration: 200,
+    easing: sineIn
+  };
 
   let screenWidth:number;
 
@@ -25,6 +33,27 @@
 
 {#if $categoryWritable.categories && $itemsWritable.items}
 <main class="bg-slate-100 dark:bg-gray-950 w-full h-full">
+  <Drawer placement='right' transitionType="fly" transitionParams={transitionParamsRight} bind:hidden={hidden6} id='sidebar6'>
+    <div class='flex items-center'>
+      <h5
+        id="drawer-label"
+        class="inline-flex items-center mb-4 text-base font-semibold text-gray-500 dark:text-gray-400">
+        <svg class="w-5 h-5 mr-2" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path></svg>Info
+      </h5>
+      <CloseButton on:click={() => (hidden6 = true)} class='mb-4 dark:text-white'/>
+        </div>
+      <p class="mb-6 text-sm text-gray-500 dark:text-gray-400">
+        Supercharge your hiring by taking advantage of our <a
+          href="/"
+          class="text-primary-600 underline dark:text-primary-500 hover:no-underline">limited-time sale</a> for
+        Flowbite Docs + Job Board. Unlimited access to over 190K top-ranked candidates and the #1 design
+        job board.
+      </p>
+      <div class="grid grid-cols-2 gap-4">
+        <Button color="light" href="/">Learn more</Button>
+        <Button href="/" >Get access <svg class="w-4 h-4 ml-1" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg></Button>
+      </div>
+    </Drawer>
     <Navbar let:hidden let:toggle class="fixed z-30">
         <NavBrand href="/">
           <img
@@ -45,10 +74,12 @@
               <UserCircleSolid  class="mx-1" size="30"/>
               Account
             </NavLi>
-            <NavLi href="/" class="flex flex-row items-center">
-              <CartOutline  class="mx-1" size="30"/>
-              Cart</NavLi>
-          </NavUl>
+            <button on:click={() => (hidden6 = false)}>
+              <NavLi  class="flex flex-row items-center">
+                <CartOutline  class="mx-1" size="30"/>
+                Cart</NavLi>
+              </button>
+            </NavUl>
           {/if}
           <NavHamburger on:click={toggle} />
         </div>
@@ -86,6 +117,7 @@
         <div >
           <slot />
         </div>
+
       </main>
 {:else}
 <main class="bg-slate-100 dark:bg-gray-950">
