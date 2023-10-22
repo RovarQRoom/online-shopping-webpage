@@ -69,13 +69,13 @@ export const itemsHandlers = {
 						where('deleted_at', '==', null),
 						orderBy(filter || 'name', orderCondition),
 						startAfter(startDoc),
-						limit(itemsPerPage)
+						limit(8)
 				  )
 				: query(
 						itemsCollection,
 						where('deleted_at', '==', null),
 						orderBy(filter || 'name', orderCondition),
-						limit(itemsPerPage)
+						limit(8)
 				  );
 
 			// Get the documents from the query condition

@@ -1,12 +1,12 @@
 <script lang="ts">
 	import categoryWritable from "$lib/store/firebase-store/category.firebase.store";
 	import { Badge, Card } from "flowbite-svelte";
-	import itemsWritable, { itemsHandlers } from "$lib/store/firebase-store/items.firebase.store";
+	import itemsWritable, { itemsCollection, itemsHandlers } from "$lib/store/firebase-store/items.firebase.store";
 	import { HeartOutline, MinusSolid, PlusSolid } from "flowbite-svelte-icons";
 	import cart, { cartHandlers } from '$lib/store/carts.store';
 	import type { Items } from "$lib/DTO";
 	import CardsImagesCarousel from "../../components/image-components/Cards-Images-Carousel.components.svelte";
-
+  
 async function addItemToCart(item: Items) {
         // if the item is not in the cart, add it to the cart
        cartHandlers.addToCart(item);
@@ -31,25 +31,35 @@ function removeItemFromCart(item: Items) {
       return $cart.some((i) => i.id === item.id);
   }
 
+  var favourite = 0
+    let like = false;
+  
+function toggleLike() {
+  like = !like;
+  like == true  ? favourite += 1 : favourite -= 1
+
+}
+
 </script>
 
-<div class="container mx-auto mt-36 md:mt-44">
+<div class="w-full mt-36 md:mt-44">
   <CardsImagesCarousel />
 </div>
   <div class="flex justify-center w-full mt-24">
-    <Badge border color="blue" class="text-2xl font-bold text-gray-100 rounded-3xl" ><span class="dark:text-gray-50 text-gray-800 p-1 px-4">
+    <Badge border  class="text-2xl font-bold text-gray-100 rounded-3xl border-black" ><span class="dark:text-gray-50 text-gray-800 p-1 px-4">
       Categories
     </span></Badge>
   </div>
 <div class="flex justify-center flex-wrap mt-5">
 {#each $categoryWritable.categories as category}
-    <Card class="m-2 rounded-2xl">
+
+    <Card class="m-2 rounded-2xl w-44 h-44 flex justify-center items-center flex-columns shadow-none border border-black dark:border-white hover:border-[#f17f18] dark:hover:border-[#f17f18] transition duration-300 ease-in-out">
         <a href="/">
-            <img class="p-4 rounded-t-lg object-cover w-40 h-32" src={category.category_image} alt="product 1" />
+            <img class="rounded-t-lg object-cover p-3 w-40 h-32" src={category.category_image} alt="product 1" />
         </a>
-      <div class="px-5 pb-5 flex justify-center">
+      <div class=" flex justify-center">
         <a href="/">
-          <h5 class='text-xl font-semibold tracking-tight text-gray-900 dark:text-white'>
+          <h5 class='text-xl  font-semibold  text-gray-900 dark:text-white'>
             {category.name}
           </h5>
         </a>
@@ -60,18 +70,32 @@ function removeItemFromCart(item: Items) {
   
   
   <div class="flex justify-center w-full mt-32">
-    <Badge border color="dark" class="text-2xl font-bold text-gray-100 rounded-3xl" ><span class="dark:text-gray-50 text-gray-800 p-1 px-4">
+    <Badge border class="text-2xl font-bold border-black text-gray-100 rounded-3xl" ><span class="dark:text-gray-50 text-gray-800 p-1 px-4">
       Popular Items
     </span></Badge>
   </div>
   <!-- <h1 class="flex font-bold justify-center text-2xl tracking-wide text-gray-900 dark:text-white">Popular Items</h1> -->
-  <div class="w-full container mx-auto flex justify-center items-center gap-px flex-wrap mt-5">
+  <div class="w-full container mx-auto flex justify-center items-center gap-px flex-wrap mt-5" >
     {#if $cart}
     {#each $itemsWritable.items as items}
-    <Card class="m-2 w-44 h-auto md:w-64 flex flex-col justify-between items-center rounded-2xl" color="dark" >
+    
+
+   
+    <Card class="m-2 w-44 h-auto md:w-64 flex flex-col justify-between border-black dark:border-white items-center rounded-2xl" color="dark" >
+     
       <div class="flex justify-start items-start w-full">
-        <HeartOutline size="32"/>
-      </div>
+       <button on:click={toggleLike}>
+        
+      
+        {#if like}
+        <i class="fa-solid fa-heart fa-lg cursor-pointer text-red-600" id="heart"></i>
+        {:else}
+        <i class="fa-regular fa-heart fa-lg cursor-pointer" id="heart"></i>
+        {/if}
+
+    </button>
+     
+    </div>
       <a href="/">
         <img class="p-4 rounded-t-lg object-contain w-36 h-36" src={items.item_image} alt="product 1" />
       </a>
@@ -86,18 +110,19 @@ function removeItemFromCart(item: Items) {
       <div class="flex justify-center bg-blue-400 bg-opacity-700 rounded-full items-center transition-all duration-500" 
      style="width: {$cart.some((i) => i.id === items.id) ? '75%' : '36px'}">
   {#if $cart.some((i) => i.id === items.id)}
-  <div class="flex justify-between w-full">
+  <div class="flex justify-between w-full text-white">
     <button on:click={()=>{addItemToCart(items);
-    }} class="justify-start p-2"><PlusSolid class="dark:hover:text-orange-500 hover:text-orange-600 text-gray-600 transition-all"/></button>
+    }} class="justify-start p-2 text-white"><PlusSolid class="dark:hover:text-orange-500 hover:text-orange-600 text-white transition-all"/></button>
     <span class="flex justify-center items-center text-xl text-center font-bold dark:text-gray-100">{($cart.find(i => i.id === items.id))?.quantity}</span>
     <button on:click={()=>{removeItemFromCart(items);
-    }}  class="justify-end p-2"><MinusSolid class="dark:hover:text-orange-500 hover:text-orange-600 text-gray-600 transition-all"/></button>
+    }}  class="justify-end p-2"><MinusSolid class="dark:hover:text-orange-500 hover:text-orange-600 text-white transition-all"/></button>
   </div>
   {:else}
-  <button on:click={()=>{addItemToCart(items)}}  class="text-3xl font-boldflex justify-center p-2"><PlusSolid class="dark:hover:text-orange-500 hover:text-orange-600 text-gray-600 transition-all"/></button>
+  <button on:click={()=>{addItemToCart(items)}}  class="text-3xl font-boldflex justify-center p-2"><PlusSolid class="dark:hover:text-orange-500 hover:text-orange-600 text-white transition-all"/></button>
   {/if}
 </div>
 </Card>
+
 {/each}
 {/if}
 </div>  

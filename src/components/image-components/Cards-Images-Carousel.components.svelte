@@ -6,7 +6,7 @@
   import Carousel from 'svelte-carousel';
 import { browser } from '$app/environment';
 	import { Img } from 'flowbite-svelte';
-    
+  
   let cardData:Card[];
   let images: { id: number; name: string; imgurl: string; attribution: string; }[];
     onMount(async () => {
@@ -27,16 +27,19 @@ import { browser } from '$app/environment';
 
 {#if images}
 {#if browser}
-  <Carousel
-  autoplay
-  autoplayDuration={10000}
-  arrows={false}
-  dots={false}
-  class="rounded-lg"
-  >
+ 
+<Carousel let:Controls>
+  
+
     {#each images as image}
       <Img href={image.attribution} src={image.imgurl} alt="" class="object-cover w-full h-[35rem] rounded-3xl px-2"/>
+      
     {/each}
-  </Carousel>
+   </Carousel>
+  
+  
 {/if}
 {/if}
+
+
+

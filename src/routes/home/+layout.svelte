@@ -148,7 +148,7 @@ cart.subscribe((value) => {
           {/if}
           <div class="w-full flex justify-between">
           <NavHamburger on:click={toggle} />
-          <div class="flex justify-center items-center w-full md:flex-row-reverse">
+          <div class="flex justify-center items-center w-full md:flex-row-reverse gap-2">
           <Search class="h-full w-full">
           </Search>
 
