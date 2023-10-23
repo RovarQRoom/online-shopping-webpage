@@ -6,7 +6,7 @@
 	import cart, { cartHandlers } from '$lib/store/carts.store';
 	import type { Items } from "$lib/DTO";
 	import CardsImagesCarousel from "../../components/image-components/Cards-Images-Carousel.components.svelte";
-  
+  import Footer from "../../components/footer.svelte"
 async function addItemToCart(item: Items) {
         // if the item is not in the cart, add it to the cart
        cartHandlers.addToCart(item);
@@ -126,3 +126,5 @@ function toggleLike() {
 {/each}
 {/if}
 </div>  
+
+<Footer />

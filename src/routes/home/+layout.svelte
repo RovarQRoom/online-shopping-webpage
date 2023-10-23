@@ -131,19 +131,26 @@ cart.subscribe((value) => {
             Kubak Online Shopping
           </span>
         </NavBrand>
-        <div class="flex justify-between  w-full flex-wrap md:flex-nowrap items-center mt-5">
+        <div class="flex items-center justify-between  w-full flex-wrap md:flex-nowrap items-center mt-5">
             
-          {#if screenWidth > 1280}
+          {#if screenWidth > 768}
           <NavUl class="md:order-1">
+            <div w-auto items-center justify-center>
+              <i class="fa-regular fa-heart fa-2xl cursor-pointer" id="heart"></i>
+            </div>
+           
+
             <NavLi href="/" class="flex flex-row items-center">
               <UserCircleSolid  class="mx-1" size="30"/>
-              Account
+             
             </NavLi>
             <button on:click={() => (hidden6 = false)}>
               <NavLi  class="flex flex-row items-center">
                 <CartOutline  class="mx-1" size="30"/>
-                Cart</NavLi>
+               </NavLi>
               </button>
+
+              
             </NavUl>
           {/if}
           <div class="w-full flex justify-between">
