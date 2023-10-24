@@ -10,11 +10,19 @@
 async function addItemToCart(item: Items) {
         // if the item is not in the cart, add it to the cart
        cartHandlers.addToCart(item);
-
        console.log("Checking Condition",$cart.some((i) => i.id === item.id));
-       
        isInCart(item);
 }
+
+let favoriteItems:{
+  id:string[],
+  name:string[],
+  userUid:string | null,
+} = {
+  id:[],
+  name:[],
+  userUid:null
+};
 
 function removeItemFromCart(item: Items) {
         // if the item is in the cart, remove it from the cart
@@ -30,14 +38,15 @@ function removeItemFromCart(item: Items) {
     );
       return $cart.some((i) => i.id === item.id);
   }
-
-  var favourite = 0
-    let like = false;
   
-function toggleLike() {
-  like = !like;
-  like == true  ? favourite += 1 : favourite -= 1
-
+  function toggleLike(id?: string, name?: string) {
+    if (favoriteItems.id.includes(id!)) {
+    favoriteItems.id = favoriteItems.id.filter((item) => item !== id);
+    favoriteItems.name = favoriteItems.name.filter((item) => item !== name);
+  } else {
+    favoriteItems.id = [...favoriteItems.id, id!];
+    favoriteItems.name = [...favoriteItems.name, name!];
+  }
 }
 
 </script>
@@ -77,24 +86,16 @@ function toggleLike() {
   <!-- <h1 class="flex font-bold justify-center text-2xl tracking-wide text-gray-900 dark:text-white">Popular Items</h1> -->
   <div class="w-full container mx-auto flex justify-center items-center gap-px flex-wrap mt-5" >
     {#if $cart}
-    {#each $itemsWritable.items as items}
-    
-
-   
+    {#each $itemsWritable.items as items, index}
     <Card class="m-2 w-44 h-auto md:w-64 flex flex-col justify-between border-black dark:border-white items-center rounded-2xl" color="dark" >
-     
       <div class="flex justify-start items-start w-full">
-       <button on:click={toggleLike}>
-        
-      
-        {#if like}
+       <button on:click={()=>toggleLike(items.id,items.name)}>
+        {#if favoriteItems.id.includes(items.id)}
         <i class="fa-solid fa-heart fa-lg cursor-pointer text-red-600" id="heart"></i>
         {:else}
         <i class="fa-regular fa-heart fa-lg cursor-pointer" id="heart"></i>
         {/if}
-
     </button>
-     
     </div>
       <a href="/">
         <img class="p-4 rounded-t-lg object-contain w-36 h-36" src={items.item_image} alt="product 1" />
