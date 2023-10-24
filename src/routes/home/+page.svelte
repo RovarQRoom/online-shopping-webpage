@@ -7,6 +7,9 @@
 	import type { Items } from "$lib/DTO";
 	import CardsImagesCarousel from "../../components/image-components/Cards-Images-Carousel.components.svelte";
   import Footer from "../../components/footer.svelte"
+	import { auth } from "$lib/firebase/firebase";
+	import { onMount } from "svelte";
+	import { favouriteStore } from "$lib/store/firebase-store/favourite.firebase.store";
 async function addItemToCart(item: Items) {
         // if the item is not in the cart, add it to the cart
        cartHandlers.addToCart(item);
@@ -15,13 +18,13 @@ async function addItemToCart(item: Items) {
 }
 
 let favoriteItems:{
-  id:string[],
-  name:string[],
-  userUid:string | null,
+  itemsId:string[],
+  itemsNames:string[],
+  userId:string | null,
 } = {
-  id:[],
-  name:[],
-  userUid:null
+  itemsId:[],
+  itemsNames:[],
+  userId:null
 };
 
 function removeItemFromCart(item: Items) {
@@ -39,15 +42,48 @@ function removeItemFromCart(item: Items) {
       return $cart.some((i) => i.id === item.id);
   }
   
-  function toggleLike(id?: string, name?: string) {
-    if (favoriteItems.id.includes(id!)) {
-    favoriteItems.id = favoriteItems.id.filter((item) => item !== id);
-    favoriteItems.name = favoriteItems.name.filter((item) => item !== name);
+  async function toggleLike(id?: string, name?: string) {
+  if (favoriteItems.itemsId.includes(id!)) {
+    favoriteItems.itemsId = favoriteItems.itemsId.filter((item) => item !== id);
+    favoriteItems.itemsNames = favoriteItems.itemsNames.filter((item) => item !== name);
   } else {
-    favoriteItems.id = [...favoriteItems.id, id!];
-    favoriteItems.name = [...favoriteItems.name, name!];
+    favoriteItems.itemsId = [...favoriteItems.itemsId, id!];
+    favoriteItems.itemsNames = [...favoriteItems.itemsNames, name!];
+  }
+
+  // if the user is not authenticated, save the favorite items in the local storage, when the user logs in, we will save them in the database.
+   
+  if (auth.currentUser != null) {
+    await favouriteStore.create(favoriteItems,auth.currentUser?.uid!);
+  } else {
+    localStorage.setItem("favoriteItems", JSON.stringify(favoriteItems));
+    
   }
 }
+
+  onMount(async()=>{
+    console.log("Auth",auth.currentUser);
+    
+    if(auth.currentUser != null){
+      await favouriteStore.get(auth.currentUser?.uid!);
+      favoriteItems = {
+        itemsId: $favouriteStore.itemsId,
+        itemsNames: $favouriteStore.itemsNames,
+        userId: auth.currentUser?.uid!,
+      };
+
+      console.log("Favorite Items in auth",favoriteItems);
+      
+    }else{
+      favoriteItems = {
+        itemsId: JSON.parse(localStorage.getItem("favoriteItems")!).id,
+        itemsNames: JSON.parse(localStorage.getItem("favoriteItems")!).name,
+        userId: null,
+      };
+      console.log("Favorite Items in not auth",favoriteItems);
+    }
+
+  })
 
 </script>
 
@@ -90,7 +126,7 @@ function removeItemFromCart(item: Items) {
     <Card class="m-2 w-44 h-auto md:w-64 flex flex-col justify-between border-black dark:border-white items-center rounded-2xl" color="dark" >
       <div class="flex justify-start items-start w-full">
        <button on:click={()=>toggleLike(items.id,items.name)}>
-        {#if favoriteItems.id.includes(items.id)}
+        {#if favoriteItems.itemsId.includes(items.id)}
         <i class="fa-solid fa-heart fa-lg cursor-pointer text-red-600" id="heart"></i>
         {:else}
         <i class="fa-regular fa-heart fa-lg cursor-pointer" id="heart"></i>
