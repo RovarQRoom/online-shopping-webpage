@@ -174,13 +174,13 @@ cart.subscribe((value) => {
         <NavUl {hidden} class="w-full">
           <NavLi href="/" active={true}>Home</NavLi>
           <NavLi id="nav-menu1" class="cursor-pointer"><Chevron aligned>Categories</Chevron></NavLi>
-          <Dropdown triggeredBy="#nav-menu1" class="z-20 w-52 overflow-y-auto overflow-x-hidden h-48 scrollbar-thumb-orange-600 scrollbar-track-gray-100 scrollbar-thin scrollbar-thumb-rounded-3xl scrollbar-track-rounded-3xl">
+          <Dropdown triggeredBy="#nav-menu1" class="z-20 w-52 overflow-y-auto overflow-x-hidden h-auto scrollbar-thumb-orange-600 scrollbar-track-gray-100 scrollbar-thin scrollbar-thumb-rounded-3xl scrollbar-track-rounded-3xl">
             {#each $categoryWritable.categories as category}
             <li class="rounded p-2 hover:bg-gray-100 dark:hover:bg-gray-600 ">
               <Checkbox>{category.name}</Checkbox>
             </li>
             {/each}
-            <DropdownItem slot="footer" class="text-center cursor-pointer dark:hover:text-orange-500 transition-all" href="/search">Search</DropdownItem>
+            <DropdownItem slot="footer" class="h-auto rounded-lg mx-2 text-center text-white cursor-pointer hover:bg-white dark:hover:bg-white hover:border-[#f17f18] bg-[#f17f18] hover:text-[#f17f18] dark:hover:text-[#f17f18] transition-all" href="/search">Search</DropdownItem>
           </Dropdown>
           <NavLi href="/services">Services</NavLi>
           {#if screenWidth <= 1280}
