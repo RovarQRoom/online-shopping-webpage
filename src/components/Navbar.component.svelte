@@ -36,10 +36,10 @@
 	import { onMount } from 'svelte';
 	import { sineIn } from 'svelte/easing';
 
-	let hidden6: boolean = true;
-	let transitionParamsRight = {
-		x: 320,
-		duration: 2000,
+	let hiddenDrawer: boolean = true;
+	let transitionParams = {
+		x: -320,
+		duration: 200,
 		easing: sineIn
 	};
 	let overhaulPrice: number = 0;
@@ -97,10 +97,11 @@
 {#if $categoryWritable.categories && $itemsWritable.items}
 	<Drawer
 		placement="right"
-		transitionParams={transitionParamsRight}
-		bind:hidden={hidden6}
-		id="sidebar6"
-		width="w-[30%]"
+		transitionType="fly"
+		{transitionParams}
+		bind:hidden={hiddenDrawer}
+		width="w-[20%]"
+		id="sidebar1"
 	>
 		<div class="flex items-center">
 			<h5
@@ -120,7 +121,7 @@
 					/></svg
 				>Cart
 			</h5>
-			<CloseButton on:click={() => (hidden6 = true)} class="mb-4 dark:text-white" />
+			<CloseButton on:click={() => (hiddenDrawer = true)} class="mb-4 dark:text-white" />
 		</div>
 		{#if $cart}
 			<Table noborder={true}>
@@ -180,7 +181,7 @@
 					<NavLi href="/" class="flex flex-row items-center">
 						<UserCircleSolid class="mx-1" size="30" />
 					</NavLi>
-					<button on:click={() => (hidden6 = false)}>
+					<button on:click={() => (hiddenDrawer = false)}>
 						<NavLi class="flex flex-row items-center">
 							<CartOutline class="mx-1" size="30" />
 						</NavLi>
@@ -247,7 +248,7 @@
 						Account
 					</NavLi>
 
-					<button on:click={() => (hidden6 = false)}>
+					<button on:click={() => (hiddenDrawer = false)}>
 						<NavLi class="flex flex-row items-center">
 							<CartOutline class="mx-1" size="25" />
 							Cart</NavLi
