@@ -1,7 +1,7 @@
 import type { Timestamp } from 'firebase/firestore';
 
 export interface Order_Items {
-	id?: string;
+	id: string;
 	item_image: string;
 	item_name: string;
 	item_uid: string;

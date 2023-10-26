@@ -1,11 +1,11 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import type { Card } from '$lib/DTO';
 	import { cardsHandlers } from '$lib/store/firebase-store';
 	//@ts-ignore
 	import Carousel from 'svelte-carousel';
 	import { browser } from '$app/environment';
 	import { Img } from 'flowbite-svelte';
+	import type { Card } from '$lib/Models';
 
 	let cardData: Card[];
 	let images: { id: number; name: string; imgurl: string; attribution: string }[];

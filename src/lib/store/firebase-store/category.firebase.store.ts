@@ -13,7 +13,7 @@ import {
 	updateDoc
 } from 'firebase/firestore';
 import { writable } from 'svelte/store';
-import type { Category } from '../../DTO';
+import type { Category } from '../../Models';
 import { database } from '../../firebase/firebase';
 type StoreValue = {
 	categories: Category[];

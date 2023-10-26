@@ -14,7 +14,7 @@ import {
 	startAfter
 } from 'firebase/firestore';
 import { writable } from 'svelte/store';
-import type { Card } from '../../DTO';
+import type { Card } from '../../Models';
 import { database } from '../../firebase/firebase';
 
 type StoreValue = {

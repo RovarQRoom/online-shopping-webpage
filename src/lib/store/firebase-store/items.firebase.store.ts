@@ -14,7 +14,7 @@ import {
 	updateDoc
 } from 'firebase/firestore';
 import { writable } from 'svelte/store';
-import type { Items } from '../../DTO';
+import type { Items } from '../../Models';
 import { database } from '../../firebase/firebase';
 
 type StoreValue = {

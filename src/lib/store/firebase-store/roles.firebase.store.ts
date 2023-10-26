@@ -1,6 +1,6 @@
 import { collection, doc, getDoc, getDocs, query, setDoc } from 'firebase/firestore';
 import { writable } from 'svelte/store';
-import type { Roles } from '../../DTO';
+import type { Roles } from '../../Models';
 import { database } from '../../firebase/firebase';
 
 // Create a writable store with an initial value of null

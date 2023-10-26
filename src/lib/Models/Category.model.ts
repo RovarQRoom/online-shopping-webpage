@@ -1,8 +1,8 @@
 import type { Timestamp } from 'firebase/firestore';
 
 export interface Category {
-	id?: string;
-	userId: string;
+	id: string;
+	user_id: string;
 	name: string;
 	description: string;
 	category_image: string;

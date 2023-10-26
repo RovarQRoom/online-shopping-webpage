@@ -1,8 +1,8 @@
 import type { Timestamp } from 'firebase/firestore';
 
 export interface Card {
-	id?: string;
-	userId: string;
+	id: string;
+	user_id: string;
 	webpage_url: string;
 	image_url: string;
 	expiration_date: Timestamp;

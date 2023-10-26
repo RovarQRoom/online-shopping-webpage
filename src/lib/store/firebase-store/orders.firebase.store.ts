@@ -14,7 +14,7 @@ import {
 	serverTimestamp
 } from 'firebase/firestore';
 import { writable } from 'svelte/store';
-import type { Orders } from '../../DTO';
+import type { Orders } from '../../Models';
 import { database } from '../../firebase/firebase';
 
 // Create a writable store with an initial value of null

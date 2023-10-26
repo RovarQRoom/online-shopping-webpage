@@ -1,7 +1,7 @@
 import type { Timestamp } from 'firebase/firestore';
 
 export interface Orders {
-	id?: string;
+	id: string;
 	client_uid: string;
 	total_amount: number;
 	status: string;

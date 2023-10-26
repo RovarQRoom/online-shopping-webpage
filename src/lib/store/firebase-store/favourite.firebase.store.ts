@@ -1,4 +1,4 @@
-import type { Favourite, RequestCreateFavorite } from "$lib/DTO/Favourite.DTO";
+import type { Favourite, RequestCreateFavorite } from "$lib/Models";
 import { database } from "$lib/firebase/firebase";
 import { Timestamp, collection, doc, getDoc, setDoc } from "firebase/firestore";
 import { writable } from "svelte/store";

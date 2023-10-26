@@ -1,9 +1,9 @@
 import type { Timestamp } from 'firebase/firestore';
-import type { Order_Items } from './Order_Items.DTO';
-import type { Orders } from './Order.DTO';
+import type { Orders } from './Order.model';
+import type { Order_Items } from './Order_Items.model';
 
 export interface Orders_History {
-	id?: string;
+	id: string;
 	order: Orders;
 	order_items: Order_Items[];
 	history?: Orders_History[];

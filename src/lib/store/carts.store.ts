@@ -1,15 +1,16 @@
-import type { Items } from '$lib/DTO';
+import type { Items } from '$lib/Models';
 import { writable } from 'svelte/store';
-  
-// create a store for the cart items
-const cart = writable<Items[]>([]);
 
-export const cartHandlers = {
+export const createCartStore = () => {
+
+  const { subscribe, set, update } = writable<Items[]>([]);
+
+  return {
+    subscribe,
+    set: (value: Items[]) => set(value),
     // add an item to the cart
-    addToCart: (item: Items) => {
-        console.log("Item Added Succefully",item);
-        
-        cart.update((value) => {
+    add: (item: Items) => {
+        update((value) => {
             // check if the item already exists in the cart
             const existingItem = value.find((i) => i.id === item.id);
             if (existingItem) {
@@ -23,8 +24,8 @@ export const cartHandlers = {
           });
     },
     // remove an item from the cart
-    removeFromCart: (item: Items) => {
-        cart.update((value) => {
+    remove: (item: Items) => {
+       update((value) => {
             // find the index of the item in the cart
             const index = value.findIndex((i) => i.id === item.id);
             if (index !== -1) {
@@ -39,8 +40,8 @@ export const cartHandlers = {
           });
     },
     // update the quantity of an item in the cart
-    updateQuantity: (id: string, quantity: number) => {
-        cart.update((items) => {
+    update: (id: string, quantity: number) => {
+        update((items) => {
             const itemIndex = items.findIndex((i) => i.id === id);
             if (itemIndex === -1) {
                 return items;
@@ -51,15 +52,14 @@ export const cartHandlers = {
         });
     },
     // clear the cart
-    clearCart: () => {
-        cart.set([]);
+    clear: () => {
+        set([]);
     },
-    getAllDataIntoCart: (items:Items[]) => {
-        cart.set(items);
-    },
-    // subscribe to the cart store
-    subscribe: cart.subscribe
+    get: (items:Items[]) => {
+        set(items);
+    }
+  };
     
 }
 
-export default cart;
+export const cartStore = createCartStore();

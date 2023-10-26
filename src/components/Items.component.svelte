@@ -1,50 +1,50 @@
 <script lang="ts">
 	import itemsWritable from '$lib/store/firebase-store/items.firebase.store';
-	import cart, { cartHandlers } from '$lib/store/carts.store';
+	import { cartStore } from '$lib/store/carts.store';
 	import { Card } from 'flowbite-svelte';
-	import type { Items } from '$lib/DTO';
 	import { favouriteStore } from '$lib/store/firebase-store/favourite.firebase.store';
 	import { auth } from '$lib/firebase/firebase';
 	import { onMount } from 'svelte';
 	import { MinusSolid, PlusSolid } from 'flowbite-svelte-icons';
+	import type { Items } from '$lib/Models';
 
 	let favoriteItems: {
-		itemsId: string[];
-		itemsNames: string[];
-		userId: string | null;
+		items_id: string[];
+		items_names: string[];
+		user_id: string | null;
 	} = {
-		itemsId: [],
-		itemsNames: [],
-		userId: null
+		items_id: [],
+		items_names: [],
+		user_id: null
 	};
 
 	async function addItemToCart(item: Items) {
 		// if the item is not in the cart, add it to the cart
-		cartHandlers.addToCart(item);
+		cartStore.add(item);
 		console.log(
 			'Checking Condition',
-			$cart.some((i) => i.id === item.id)
+			$cartStore.some((i) => i.id === item.id)
 		);
 		isInCart(item);
 	}
 
 	function removeItemFromCart(item: Items) {
 		// if the item is in the cart, remove it from the cart
-		cartHandlers.removeFromCart(item);
+		cartStore.remove(item);
 	}
 
 	// a function to check if an item is in the cart or not
 	function isInCart(item: Items) {
-		return $cart.some((i) => i.id === item.id);
+		return $cartStore.some((i) => i.id === item.id);
 	}
 
 	async function toggleLike(id?: string, name?: string) {
-		if (favoriteItems.itemsId.includes(id!)) {
-			favoriteItems.itemsId = favoriteItems.itemsId.filter((item) => item !== id);
-			favoriteItems.itemsNames = favoriteItems.itemsNames.filter((item) => item !== name);
+		if (favoriteItems.items_id.includes(id!)) {
+			favoriteItems.items_id = favoriteItems.items_id.filter((item) => item !== id);
+			favoriteItems.items_names = favoriteItems.items_names.filter((item) => item !== name);
 		} else {
-			favoriteItems.itemsId = [...favoriteItems.itemsId, id!];
-			favoriteItems.itemsNames = [...favoriteItems.itemsNames, name!];
+			favoriteItems.items_id = [...favoriteItems.items_id, id!];
+			favoriteItems.items_names = [...favoriteItems.items_names, name!];
 		}
 
 		// if the user is not authenticated, save the favorite items in the local storage, when the user logs in, we will save them in the database.
@@ -60,21 +60,21 @@
 		if (auth.currentUser != null) {
 			await favouriteStore.get(auth.currentUser?.uid!);
 			favoriteItems = {
-				itemsId: $favouriteStore.itemsId,
-				itemsNames: $favouriteStore.itemsNames,
-				userId: auth.currentUser?.uid!
+				items_id: $favouriteStore.items_id,
+				items_names: $favouriteStore.items_names,
+				user_id: auth.currentUser?.uid!
 			};
 		} else {
 			favoriteItems = {
-				itemsId: JSON.parse(localStorage.getItem('favoriteItems')!).itemsId,
-				itemsNames: JSON.parse(localStorage.getItem('favoriteItems')!).itemsNames,
-				userId: null
+				items_id: JSON.parse(localStorage.getItem('favoriteItems')!).itemsId,
+				items_names: JSON.parse(localStorage.getItem('favoriteItems')!).itemsNames,
+				user_id: null
 			};
 		}
 	});
 </script>
 
-{#if $cart}
+{#if $cartStore}
 	{#each $itemsWritable.items as items, index}
 		<Card
 			class="m-2 w-44 h-auto md:w-64 flex flex-col justify-between border-black dark:border-white items-center rounded-2xl"
@@ -82,7 +82,7 @@
 		>
 			<div class="flex justify-start items-start w-full">
 				<button on:click={() => toggleLike(items.id, items.name)}>
-					{#if favoriteItems.itemsId.includes(items.id)}
+					{#if favoriteItems.items_id.includes(items.id)}
 						<i class="fa-solid fa-heart fa-lg cursor-pointer text-red-600" id="heart" />
 					{:else}
 						<i class="fa-regular fa-heart fa-lg cursor-pointer" id="heart" />
@@ -108,9 +108,9 @@
 			</div>
 			<div
 				class="flex justify-center bg-blue-400 bg-opacity-700 rounded-full items-center transition-all duration-500"
-				style="width: {$cart.some((i) => i.id === items.id) ? '75%' : '36px'}"
+				style="width: {$cartStore.some((i) => i.id === items.id) ? '75%' : '36px'}"
 			>
-				{#if $cart.some((i) => i.id === items.id)}
+				{#if $cartStore.some((i) => i.id === items.id)}
 					<div class="flex justify-between w-full text-white">
 						<button
 							on:click={() => {
@@ -123,7 +123,7 @@
 						>
 						<span
 							class="flex justify-center items-center text-xl text-center font-bold dark:text-gray-100"
-							>{$cart.find((i) => i.id === items.id)?.quantity}</span
+							>{$cartStore.find((i) => i.id === items.id)?.quantity}</span
 						>
 						<button
 							on:click={() => {

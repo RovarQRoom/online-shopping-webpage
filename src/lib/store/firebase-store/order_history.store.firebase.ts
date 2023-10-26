@@ -10,7 +10,7 @@ import {
 	where
 } from 'firebase/firestore';
 import { writable } from 'svelte/store';
-import type { Orders_History } from '../../DTO';
+import type { Orders_History } from '../../Models';
 import { database } from '../../firebase/firebase';
 
 // Create a writable store with an initial value of null

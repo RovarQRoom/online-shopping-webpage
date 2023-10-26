@@ -3,7 +3,7 @@ import type { Timestamp } from 'firebase/firestore';
 export interface Items {
 	id: string;
 	categorys: Category_Details[];
-	userId: string;
+	user_id: string;
 	name: string;
 	price: number;
 	detail: string;

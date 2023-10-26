@@ -1,9 +1,9 @@
 import type { Timestamp } from "firebase/firestore";
 
 export interface Favourite {
-    id?: string;
-    itemsId: string[];
-    itemsNames: string[];
+    id: string;
+    items_id: string[];
+    items_names: string[];
     created_at: Timestamp;
     updated_at: Timestamp | null;
     deleted_at: Timestamp | null;
@@ -11,7 +11,7 @@ export interface Favourite {
 
 
 export interface RequestCreateFavorite{
-    itemsId: string[];
-    itemsNames: string[];
-    userId: string | null;
+    items_id: string[];
+    items_names: string[];
+    user_id: string | null;
 }

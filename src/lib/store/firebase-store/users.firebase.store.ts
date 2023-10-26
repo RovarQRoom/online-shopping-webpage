@@ -8,7 +8,7 @@ import {
 } from 'firebase/firestore';
 import { writable } from 'svelte/store';
 import userWritable from './auth.firebase.store';
-import type { Users } from '../../DTO';
+import type { Users } from '../../Models';
 import { database } from '../../firebase/firebase';
 
 // Create a writable store with an initial value of null

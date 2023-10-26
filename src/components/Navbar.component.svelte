@@ -1,9 +1,8 @@
 <script lang="ts">
 	import itemsWritable from '$lib/store/firebase-store/items.firebase.store';
 	import { goto } from '$app/navigation';
-	import type { Items } from '$lib/DTO';
 	import { functions } from '$lib/firebase/firebase';
-	import cart, { cartHandlers } from '$lib/store/carts.store';
+	import { cartStore } from '$lib/store/carts.store';
 	import { itemsHandlers, userWritable } from '$lib/store/firebase-store';
 	import categoryWritable, {
 		categoryHandlers
@@ -35,6 +34,7 @@
 	import { UserCircleSolid, CartOutline } from 'flowbite-svelte-icons';
 	import { onMount } from 'svelte';
 	import { sineIn } from 'svelte/easing';
+	import type { Items } from '$lib/Models';
 
 	let hiddenDrawer: boolean = true;
 	let transitionParams = {
@@ -56,18 +56,18 @@
 		let saveData: any = localStorage.getItem('cart');
 		if (saveData) {
 			saveData = (JSON.parse(saveData ?? '') as Items[]) ?? [];
-			cartHandlers.getAllDataIntoCart(saveData);
+			cartStore.get(saveData);
 		}
 
-		cart.subscribe((value) => {
+		cartStore.subscribe((value) => {
 			localStorage.setItem('cart', JSON.stringify(value));
 		});
 	});
 
 	$: {
 		overhaulPrice = 0;
-		if ($cart) {
-			$cart.forEach((item) => {
+		if ($cartStore) {
+			$cartStore.forEach((item) => {
 				overhaulPrice += item.price * item.quantity;
 			});
 		}
@@ -83,7 +83,7 @@
 				functions,
 				'buyItems'
 			)({
-				items: $cart,
+				items: $cartStore,
 				client_uid: $userWritable.user.uid,
 				total_amount: overhaulPrice,
 				address: $userWritable.user.displayName
@@ -123,7 +123,7 @@
 			</h5>
 			<CloseButton on:click={() => (hiddenDrawer = true)} class="mb-4 dark:text-white" />
 		</div>
-		{#if $cart}
+		{#if $cartStore}
 			<Table noborder={true}>
 				<TableHead
 					class="text-xs text-gray-700 uppercase bg-gray-100 dark:bg-gray-700 dark:text-gray-400"
@@ -134,7 +134,7 @@
 					<TableHeadCell>Price</TableHeadCell>
 				</TableHead>
 				<TableBody>
-					{#each $cart as item}
+					{#each $cartStore as item}
 						<TableBodyRow>
 							<TableBodyCell
 								><Avatar class="object-contain p-1" src={item.item_image} rounded /></TableBodyCell

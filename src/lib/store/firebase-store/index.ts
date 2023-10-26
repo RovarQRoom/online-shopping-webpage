@@ -7,3 +7,4 @@ export * from './order_items.firebase.store';
 export * from './orders.firebase.store';
 export * from './roles.firebase.store';
 export * from './users.firebase.store';
+export * from './favourite.firebase.store';
