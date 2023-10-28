@@ -3,13 +3,7 @@ import type { User } from 'firebase/auth';
 import { writable } from 'svelte/store';
 
 // Create a writable store with an initial value of null
-export const userWritable = writable<CreateUser>({
-	user: null,
-	confirmationResult: null,
-	loading: true,
-	data: null,
-	errorMessage: null
-});
+export const userWritable = writable<CreateUser>();
 export const createAuthStore = () => {
 	const { subscribe, set, update } = writable<CreateUser>();
 

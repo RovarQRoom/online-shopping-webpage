@@ -65,9 +65,17 @@
 				user_id: auth.currentUser?.uid!
 			};
 		} else {
+			let items_Id:string[] = [];
+			let items_names:string[] = [];
+			if(localStorage.getItem('favoriteItems') != null)
+			{
+				items_Id = JSON.parse(localStorage.getItem('favoriteItems')!).items_id;
+				items_names = JSON.parse(localStorage.getItem('favoriteItems')!).items_names;
+			}
+
 			favoriteItems = {
-				items_id: JSON.parse(localStorage.getItem('favoriteItems')!).itemsId,
-				items_names: JSON.parse(localStorage.getItem('favoriteItems')!).itemsNames,
+				items_id: items_Id,
+				items_names: items_names,
 				user_id: null
 			};
 		}
