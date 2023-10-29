@@ -36,6 +36,13 @@
 	import { sineIn } from 'svelte/easing';
 	import type { Items } from '$lib/Models';
 
+  let hidden8 = true;
+  let transitionParamsBottom = {
+    y: 320,
+    duration: 200,
+    easing: sineIn
+  };
+
 	let hiddenDrawer: boolean = true;
 	let transitionParams = {
 		x: -320,
@@ -100,8 +107,8 @@
 		transitionType="fly"
 		{transitionParams}
 		bind:hidden={hiddenDrawer}
-		width="w-[20%]"
 		id="sidebar1"
+		class="w-full md:w-1/2 backdrop-blur-lg bg-[#ffffff59] dark:bg-[#21212159]"
 	>
 		<div class="flex items-center">
 			<h5
@@ -158,10 +165,31 @@
 			<Button on:click={buyingItems}>Buy Now</Button>
 		</div>
 	</Drawer>
+
+
+
+
+<!---START Favourite Drawer-->
+
+	<Drawer class=" w-full h-1/2" placement="bottom" transitionType="fly" transitionParams={transitionParamsBottom} bind:hidden={hidden8} id="sidebar8">
+		<CloseButton on:click={() => (hidden8 = true)} class="mb-4 dark:text-white" />
+		<div class="flex items-center h-full">
+		
+		 
+		</div>
+		
+	
+	  </Drawer>
+
+<!---END Favourite Drawer-->
+
+
+
 	<Navbar
 		let:hidden
 		let:toggle
 		class="fixed z-30 top-0 backdrop-blur-lg bg-[#ffffffb3] dark:bg-[#212121b3]"
+		
 	>
 		<NavBrand href="/" class="w-full flex justify-center items-center">
 			<img src="/Images/kubak.logo.svg" class="mr-3 h-6 sm:h-9" alt="Kubak" />
@@ -173,10 +201,24 @@
 		</NavBrand>
 		<div class="flex items-center justify-between w-full flex-wrap md:flex-nowrap mt-5">
 			{#if screenWidth > 768}
-				<NavUl class="md:order-1">
+				<NavUl class="md:order-1  ">
+
+
+
+
+					<!---START  Favourite Drawer  -->
+
 					<div class="w-auto items-center justify-center">
-						<i class="fa-regular fa-heart fa-2xl cursor-pointer" id="heart" />
+						<!-- svelte-ignore a11y-click-events-have-key-events -->
+						<!-- svelte-ignore a11y-no-static-element-interactions -->
+						<i on:click={() => (hidden8 = false)} class="fa-regular fa-heart fa-2xl cursor-pointer" id="heart" />
 					</div>
+
+					
+
+					<!---END  Favourite Drawer  -->
+
+
 
 					<NavLi href="/" class="flex flex-row items-center">
 						<UserCircleSolid class="mx-1" size="30" />
@@ -223,12 +265,13 @@
 					</DarkMode>
 				</div>
 			</div>
-			<NavUl {hidden} class="w-full">
+			<NavUl {hidden} class="w-full ">
 				<NavLi href="/" active={true}>Home</NavLi>
 				<NavLi id="nav-menu1" class="cursor-pointer"><Chevron aligned>Categories</Chevron></NavLi>
 				<Dropdown
 					triggeredBy="#nav-menu1"
-					class="z-20 w-52 overflow-y-auto overflow-x-hidden h-auto scrollbar-thumb-orange-600 scrollbar-track-gray-100 scrollbar-thin scrollbar-thumb-rounded-3xl scrollbar-track-rounded-3xl"
+					class="z-20 w-52 overflow-y-auto overflow-x-hidden h-auto scrollbar-thumb-orange-600 scrollbar-track-gray-100 scrollbar-thin scrollbar-thumb-rounded-3xl scrollbar-track-rounded-3xl "
+				
 				>
 					{#each $categoryWritable.categories as category}
 						<li class="rounded p-2 hover:bg-gray-100 dark:hover:bg-gray-600">
@@ -237,12 +280,12 @@
 					{/each}
 					<DropdownItem
 						slot="footer"
-						class="h-auto rounded-lg mx-2 text-center text-white cursor-pointer hover:bg-white dark:hover:bg-white hover:border-[#f17f18] bg-[#f17f18] hover:text-[#f17f18] dark:hover:text-[#f17f18] transition-all"
+						class="h-auto rounded-lg mx-2 text-center text-white cursor-pointer hover:bg-white dark:hover:bg-white hover:border-[#f17f18] bg-[#f17f18] hover:text-[#f17f18] dark:hover:text-[#f17f18] transition-all "
 						href="/search">Search</DropdownItem
 					>
 				</Dropdown>
 				<NavLi href="/services">Services</NavLi>
-				{#if screenWidth <= 1280}
+				{#if screenWidth <= 768}
 					<NavLi href="/" class="flex flex-row items-center">
 						<UserCircleSolid class="mx-1" size="25" />
 						Account
