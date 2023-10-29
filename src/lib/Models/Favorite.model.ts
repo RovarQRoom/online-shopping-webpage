@@ -1,6 +1,6 @@
 import type { Timestamp } from "firebase/firestore";
 
-export interface Favourite {
+export interface Favorite {
     id: string;
     items_id: string[];
     items_names: string[];
