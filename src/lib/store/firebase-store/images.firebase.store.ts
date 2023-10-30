@@ -6,8 +6,6 @@ export const imagesHandlers = {
 		try {
 			const fileRef = ref(storage, `images/${image.name}`);
 			await uploadBytes(fileRef, image);
-			console.log('uploaded');
-
 			const url = await getDownloadURL(fileRef);
 			return url;
 		} catch (e) {

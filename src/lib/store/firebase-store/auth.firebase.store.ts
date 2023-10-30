@@ -1,6 +1,6 @@
 import type { CreateUser } from '$lib/Models/Requests/User.request.model';
 import { auth, database } from '$lib/firebase/firebase';
-import { signInWithPhoneNumber, type ApplicationVerifier, type User, type ConfirmationResult } from 'firebase/auth';
+import { signInWithPhoneNumber, type ApplicationVerifier, type ConfirmationResult} from 'firebase/auth';
 import { collection, getDocs, limit, query, where } from 'firebase/firestore';
 import { writable } from 'svelte/store';
 
@@ -13,21 +13,41 @@ export const createAuthStore = () => {
 		subscribe,
 		set: (value: CreateUser) => set(value),
 		sign_in: async (phoneNumber: string, applicationVerifier:ApplicationVerifier) => {
-			let confirmationResult = await signInWithPhoneNumber(auth ,phoneNumber, applicationVerifier);
-			if (confirmationResult) {
-				let user = authStore.get_user_by_phone_number(phoneNumber);
+			try{
+				let confirmationResult = await signInWithPhoneNumber(auth ,phoneNumber, applicationVerifier);
+				if (confirmationResult) {
+					set({
+						user: auth.currentUser,
+						confirmationResult: confirmationResult,
+						loading: false,
+						data: null,
+						errorMessage: null
+					});
+				}
+			}catch(e){
+				console.log("Error: ",e);
+			}
+		},
+		sign_out: async() => {
+			try{
+				await auth.signOut();
 				set({
-					user: user,
-					confirmationResult: confirmationResult,
+					user: null,
+					confirmationResult: undefined,
 					loading: false,
 					data: null,
 					errorMessage: null
 				});
+			}catch(e){
+				console.log("Error: ",e);
 			}
 		},
-		sign_out: () => {
-		},
-		confirm: (code: string) => {
+		confirm: async (code: string, confirmationResult:ConfirmationResult) => {
+			try{
+				await confirmationResult.confirm(code);
+			}catch(e){
+				console.log("Error: ",e);
+			}
 		},
 		get_user_by_phone_number: async (phoneNumber: string) => {
 			try{

@@ -1,17 +1,8 @@
-import type { Timestamp } from "firebase/firestore";
+import type { Datetime } from "./Extention/Datetime.extention.model";
 
-export interface Favorite {
+export interface Favorite extends Datetime {
     id: string;
-    items_id: string[];
-    items_names: string[];
-    created_at: Timestamp;
-    updated_at: Timestamp | null;
-    deleted_at: Timestamp | null;
-}
-
-
-export interface RequestCreateFavorite{
-    items_id: string[];
-    items_names: string[];
     user_id: string | null;
+    items_id: string[];
+    items_names: string[];
 }

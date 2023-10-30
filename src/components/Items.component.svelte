@@ -1,5 +1,4 @@
 <script lang="ts">
-	import itemsWritable from '$lib/store/firebase-store/items.firebase.store';
 	import { cartStore } from '$lib/store/carts.store';
 	import { Card } from 'flowbite-svelte';
 	import { favoriteStore } from '$lib/store/firebase-store/favorite.firebase.store';
@@ -7,6 +6,7 @@
 	import { onMount } from 'svelte';
 	import { MinusSolid, PlusSolid } from 'flowbite-svelte-icons';
 	import type { Items } from '$lib/Models';
+	import { itemsStore } from '$lib/store/firebase-store';
 
 	let favoriteItems: {
 		items_id: string[];
@@ -79,7 +79,7 @@
 </script>
 
 {#if $cartStore}
-	{#each $itemsWritable.items as items, index}
+	{#each $itemsStore.data as items}
 		<Card
 			class="m-2 w-44 h-auto md:w-64 flex flex-col justify-between border-black dark:border-white items-center rounded-2xl"
 			color="dark"
