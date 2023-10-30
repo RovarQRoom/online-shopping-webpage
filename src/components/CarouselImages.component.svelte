@@ -23,21 +23,28 @@
 			};
 		});
 	});
+	
 </script>
 
 {#if images}
 	{#if browser}
-		<div class="w-full mt-36 md:mt-44">
-			<Carousel let:Controls>
-				{#each images as image}
-					<Img
-						href={image.attribution}
-						src={image.imgurl}
-						alt=""
-						class="object-cover w-full h-[35rem] rounded-3xl px-2"
-					/>
-				{/each}
-			</Carousel>
-		</div>
+	<div class="w-full md:w-[65%] mt-36 md:mt-44 rounded-t-3xl pl-4">
+
+		<Carousel
+	  autoplay
+	  autoplayDuration={5000}
+	  autoplayProgressVisible
+	class="w-full rounded-t-3xl"
+	>
+	
+	  {#each images as image}
+		<img src={image.imgurl} alt=""
+		class="object-cover w-full h-[35rem] rounded-t-3xl"
+		
+		>
+	  {/each}
+	</Carousel>
+	</div>
 	{/if}
 {/if}
+

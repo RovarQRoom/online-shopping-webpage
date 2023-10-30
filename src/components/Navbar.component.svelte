@@ -33,14 +33,14 @@
 	} from 'flowbite-svelte';
 	import { UserCircleSolid, CartOutline } from 'flowbite-svelte-icons';
 	import { onMount } from 'svelte';
-	import { sineIn } from 'svelte/easing';
+	import { sineIn, sineInOut } from 'svelte/easing';
 	import type { Items } from '$lib/Models';
 
   let hidden8 = true;
   let transitionParamsBottom = {
     y: 320,
     duration: 200,
-    easing: sineIn
+    easing: sineInOut
   };
 
 	let hiddenDrawer: boolean = true;
@@ -108,7 +108,7 @@
 		{transitionParams}
 		bind:hidden={hiddenDrawer}
 		id="sidebar1"
-		class="w-full md:w-1/2 backdrop-blur-lg bg-[#ffffff59] dark:bg-[#21212159]"
+		class="w-full md:w-1/2 backdrop-blur-lg bg-[#ffffffb3] dark:bg-[#21212159]"
 	>
 		<div class="flex items-center">
 			<h5
@@ -171,7 +171,7 @@
 
 <!---START Favourite Drawer-->
 
-	<Drawer class=" w-full h-1/2" placement="bottom" transitionType="fly" transitionParams={transitionParamsBottom} bind:hidden={hidden8} id="sidebar8">
+	<Drawer class=" w-full h-full" placement="bottom" transitionType="fly" transitionParams={transitionParamsBottom} bind:hidden={hidden8} id="sidebar8">
 		<CloseButton on:click={() => (hidden8 = true)} class="mb-4 dark:text-white" />
 		<div class="flex items-center h-full">
 		

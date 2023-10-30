@@ -5,7 +5,7 @@
 
 {#each $categoryWritable.categories as category}
 	<Card
-		class="m-2 rounded-2xl w-44 h-44 flex justify-center items-center flex-columns shadow-none border border-black dark:border-white hover:border-[#f17f18] dark:hover:border-[#f17f18] transition duration-300 ease-in-out"
+		class="m-2 rounded-2xl w-44 h-44 flex justify-center items-center flex-cols shadow-none border border-black dark:border-white hover:border-[#f17f18] dark:hover:border-[#f17f18] transition duration-300 ease-in-out"
 	>
 		<a href="/">
 			<img
