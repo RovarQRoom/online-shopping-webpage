@@ -1,12 +1,12 @@
 <script lang="ts">
-	import itemsWritable from '$lib/store/firebase-store/items.firebase.store';
 	import { cartStore } from '$lib/store/carts.store';
 	import { Card } from 'flowbite-svelte';
-	import { favouriteStore } from '$lib/store/firebase-store/favourite.firebase.store';
+	import { favoriteStore } from '$lib/store/firebase-store/favorite.firebase.store';
 	import { auth } from '$lib/firebase/firebase';
 	import { onMount } from 'svelte';
 	import { MinusSolid, PlusSolid } from 'flowbite-svelte-icons';
 	import type { Items } from '$lib/Models';
+	import { itemsStore } from '$lib/store/firebase-store';
 
 	let favoriteItems: {
 		items_id: string[];
@@ -21,10 +21,6 @@
 	async function addItemToCart(item: Items) {
 		// if the item is not in the cart, add it to the cart
 		cartStore.add(item);
-		console.log(
-			'Checking Condition',
-			$cartStore.some((i) => i.id === item.id)
-		);
 		isInCart(item);
 	}
 
@@ -50,7 +46,7 @@
 		// if the user is not authenticated, save the favorite items in the local storage, when the user logs in, we will save them in the database.
 
 		if (auth.currentUser != null) {
-			await favouriteStore.create(favoriteItems, auth.currentUser?.uid!);
+			await favoriteStore.create(favoriteItems, auth.currentUser?.uid!);
 		} else {
 			localStorage.setItem('favoriteItems', JSON.stringify(favoriteItems));
 		}
@@ -58,10 +54,10 @@
 
 	onMount(async () => {
 		if (auth.currentUser != null) {
-			await favouriteStore.get(auth.currentUser?.uid!);
+			await favoriteStore.get(auth.currentUser?.uid!);
 			favoriteItems = {
-				items_id: $favouriteStore.items_id,
-				items_names: $favouriteStore.items_names,
+				items_id: $favoriteStore.items_id,
+				items_names: $favoriteStore.items_names,
 				user_id: auth.currentUser?.uid!
 			};
 		} else {
@@ -83,7 +79,7 @@
 </script>
 
 {#if $cartStore}
-	{#each $itemsWritable.items as items, index}
+	{#each $itemsStore.data as items}
 		<Card
 			class="m-2 w-44 h-auto md:w-64 flex flex-col justify-between border-black dark:border-white items-center rounded-2xl"
 			color="dark"

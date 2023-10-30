@@ -1,6 +1,7 @@
 import type { Timestamp } from 'firebase/firestore';
+import type { Datetime } from './Extention/Datetime.extention.model';
 
-export interface Users {
+export interface Users extends Datetime {
 	id: string;
 	name: string;
 	email: string;
@@ -9,7 +10,4 @@ export interface Users {
 	imgUrl?: string;
 	birthday?: Timestamp;
 	role: string[];
-	created_at: Timestamp;
-	updated_at: Timestamp | null;
-	deleted_at: Timestamp | null;
 }

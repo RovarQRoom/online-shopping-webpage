@@ -33,6 +33,9 @@
 	},
 	"type": "module",
 	"dependencies": {
+		"@automapper/classes": "^8.7.7",
+		"@automapper/core": "^8.7.7",
+		"@automapper/pojos": "^8.7.7",
 		"@mantine/core": "^7.1.5",
 		"@mantine/hooks": "^7.1.5",
 		"@popperjs/core": "^2.11.8",
@@ -40,7 +43,7 @@
 		"firebase": "^9.23.0",
 		"flowbite": "^1.6.6",
 		"flowbite-svelte": "^0.39.1",
-		"swiffy-slider": "^1.6.0",
+		"reflect-metadata": "^0.1.13",
 		"tailwind-merge": "^1.13.2"
 	}
 }

@@ -3,10 +3,6 @@
 	import SectionTitle from '../components/SectionTitle.component.svelte';
 	import Categories from '../components/Categories.component.svelte';
 	import Items from '../components/Items.component.svelte';
-	
-
-
-	
 </script>
 
 <CardsImagesCarousel />

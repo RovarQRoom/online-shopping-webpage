@@ -17,6 +17,18 @@ export const firebase_messagingSenderId = ENVIROMENT.VITE_FIREBASE_MESSAGING_SEN
 export const firebase_appId = ENVIROMENT.VITE_FIREBASE_APP_ID;
 export const firebase_measurementId = ENVIROMENT.VITE_FIREBASE_MEASUREMENT_ID;
 
+//Firebase Collections Names
+export const firebase_collection_users = ENVIROMENT.VITE_FIREBASE_COLLECTION_USERS;
+export const firebase_collection_cards = ENVIROMENT.VITE_FIREBASE_COLLECTION_CARDS;
+export const firebase_collection_items = ENVIROMENT.VITE_FIREBASE_COLLECTION_ITEMS;
+export const firebase_collection_category = ENVIROMENT.VITE_FIREBASE_COLLECTION_CATEGORY;
+export const firebase_collection_favorites = ENVIROMENT.VITE_FIREBASE_COLLECTION_FAVORITES;
+export const firebase_collection_orders = ENVIROMENT.VITE_FIREBASE_COLLECTION_ORDERS;
+export const firebase_collection_roles = ENVIROMENT.VITE_FIREBASE_COLLECTION_ROLES;
+
+//Firebase Storage
+export const firebase_storage_bucket_image = ENVIROMENT.VITE_FIREBASE_IMAGE_FOLDER_URL;
+
 export const firebase_cloud_messaging_server_key =
 	ENVIROMENT.VITE_FIREBASE_CLOUD_MESSAGING_SERVER_KEY;
 ENVIROMENT.VITE_FIREBASE_CLOUD_MESSAGING_PUBLIC_KEY;

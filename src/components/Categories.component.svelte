@@ -1,9 +1,9 @@
 <script>
-	import categoryWritable from '$lib/store/firebase-store/category.firebase.store';
+	import { categoryStore } from '$lib/store/firebase-store';
 	import { Card } from 'flowbite-svelte';
 </script>
 
-{#each $categoryWritable.categories as category}
+{#each $categoryStore.data as category}
 	<Card
 		class="m-2 rounded-2xl w-44 h-44 flex justify-center items-center flex-cols shadow-none border border-black dark:border-white hover:border-[#f17f18] dark:hover:border-[#f17f18] transition duration-300 ease-in-out"
 	>

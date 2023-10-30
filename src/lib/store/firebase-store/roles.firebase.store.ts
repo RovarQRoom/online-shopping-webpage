@@ -1,47 +1,49 @@
-import { collection, doc, getDoc, getDocs, query, setDoc } from 'firebase/firestore';
-import { writable } from 'svelte/store';
+import { doc, getDoc, getDocs, query } from 'firebase/firestore';
 import type { Roles } from '../../Models';
-import { database } from '../../firebase/firebase';
+import { roles_collection } from '../../firebase/firebase';
+import { writable } from 'svelte/store';
 
-// Create a writable store with an initial value of null
-const rolesWritable = writable<Roles[]>([]);
-export const rolesCollection = collection(database, 'roles');
+const collection = roles_collection;
 
-export const rolesHandlers = {
-	getRole: async (id: string) => {
-		try {
-			const docRef = doc(rolesCollection, id);
-			const docSnap = await getDoc(docRef);
+export const createRolesWritable = () => {
+	const { subscribe, set, update } = writable<Roles[]>([]);
 
-			return { id: docSnap.id, ...docSnap.data() };
-		} catch (e) {
-			console.log('Error :', e);
+	return {
+		subscribe,
+		set: (value: Roles[]) => set(value),
+		get: async (id: string) => {
+			try {
+				const docRef = doc(collection, id);
+				const docSnap = await getDoc(docRef);
+
+				return { id: docSnap.id, ...docSnap.data() };
+			} catch (e) {
+				console.log('Error :', e);
+			}
+		},
+		getAll: async () => {
+			try {
+				const rolesData: Roles[] = [];
+				const queryCondition = query(collection);
+				const querySnapshot = await getDocs(queryCondition);
+
+				querySnapshot.forEach((doc) => {
+					rolesData.push(
+						Object.assign(
+							{
+								id: doc.id
+							},
+							doc.data()
+						) as Roles
+					);
+				});
+
+				set(rolesData);
+			} catch (e) {
+				console.log('Error :', e);
+			}
 		}
-	},
-	getRoles: async () => {
-		try {
-			const rolesData: Roles[] = [];
-			const queryCondition = query(rolesCollection);
-			const querySnapshot = await getDocs(queryCondition);
-
-			querySnapshot.forEach((doc) => {
-				rolesData.push(
-					Object.assign(
-						{
-							id: doc.id
-						},
-						doc.data()
-					) as Roles
-				);
-			});
-
-			console.log('usersData In Store :', rolesData);
-
-			rolesWritable.set(rolesData);
-		} catch (e) {
-			console.log('Error :', e);
-		}
-	}
+	};
 };
 
-export default rolesWritable;
+export const rolesWritable = createRolesWritable();

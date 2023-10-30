@@ -1,6 +1,6 @@
-import type { Timestamp } from 'firebase/firestore';
+import type { Datetime } from './Extention/Datetime.extention.model';
 
-export interface Order_Items {
+export interface Order_Items extends Datetime {
 	id: string;
 	item_image: string;
 	item_name: string;
@@ -8,7 +8,4 @@ export interface Order_Items {
 	order_uid: string;
 	price: number;
 	quantity: number;
-	created_at: Timestamp;
-	updated_at: Timestamp | null;
-	deleted_at: Timestamp | null;
 }

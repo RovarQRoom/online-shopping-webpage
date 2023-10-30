@@ -21,7 +21,7 @@
 		>
 			<FooterLink href="/">Home</FooterLink>
 			<FooterLink href="/">Categories</FooterLink>
-			<FooterLink href="/">Favourite</FooterLink>
+			<FooterLink href="/">Favorite</FooterLink>
 		</FooterLinkGroup>
 	</div>
 

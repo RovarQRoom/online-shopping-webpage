@@ -1,12 +1,8 @@
 <script lang="ts">
-	import itemsWritable from '$lib/store/firebase-store/items.firebase.store';
 	import { goto } from '$app/navigation';
 	import { functions } from '$lib/firebase/firebase';
 	import { cartStore } from '$lib/store/carts.store';
-	import { itemsHandlers, userWritable } from '$lib/store/firebase-store';
-	import categoryWritable, {
-		categoryHandlers
-	} from '$lib/store/firebase-store/category.firebase.store';
+	import { categoryStore, itemsStore, userWritable } from '$lib/store/firebase-store';
 	import { httpsCallable } from 'firebase/functions';
 	import {
 		Drawer,
@@ -56,8 +52,8 @@
 		updateScreenWidth();
 		window.addEventListener('resize', updateScreenWidth);
 
-		await categoryHandlers.getCategories();
-		await itemsHandlers.getItems(undefined, 'popularity', false);
+		await categoryStore.getAll();
+		await itemsStore.getAll(undefined, 'popularity', false);
 
 		// get all data into the cart
 		let saveData: any = localStorage.getItem('cart');
@@ -101,7 +97,7 @@
 	}
 </script>
 
-{#if $categoryWritable.categories && $itemsWritable.items}
+{#if $categoryStore.data && $itemsStore.data}
 	<Drawer
 		placement="right"
 		transitionType="fly"
@@ -166,30 +162,19 @@
 		</div>
 	</Drawer>
 
-
-
-
-<!---START Favourite Drawer-->
+	<!---START Favourite Drawer-->
 
 	<Drawer class=" w-full h-full" placement="bottom" transitionType="fly" transitionParams={transitionParamsBottom} bind:hidden={hidden8} id="sidebar8">
 		<CloseButton on:click={() => (hidden8 = true)} class="mb-4 dark:text-white" />
-		<div class="flex items-center h-full">
-		
-		 
-		</div>
-		
-	
-	  </Drawer>
+		<div class="flex items-center h-full" />
+	</Drawer>
 
-<!---END Favourite Drawer-->
-
-
+	<!---END Favourite Drawer-->
 
 	<Navbar
 		let:hidden
 		let:toggle
 		class="fixed z-30 top-0 backdrop-blur-lg bg-[#ffffffb3] dark:bg-[#212121b3]"
-		
 	>
 		<NavBrand href="/" class="w-full flex justify-center items-center">
 			<img src="/Images/kubak.logo.svg" class="mr-3 h-6 sm:h-9" alt="Kubak" />
@@ -202,23 +187,19 @@
 		<div class="flex items-center justify-between w-full flex-wrap md:flex-nowrap mt-5">
 			{#if screenWidth > 768}
 				<NavUl class="md:order-1  ">
-
-
-
-
 					<!---START  Favourite Drawer  -->
 
 					<div class="w-auto items-center justify-center">
 						<!-- svelte-ignore a11y-click-events-have-key-events -->
 						<!-- svelte-ignore a11y-no-static-element-interactions -->
-						<i on:click={() => (hidden8 = false)} class="fa-regular fa-heart fa-2xl cursor-pointer" id="heart" />
+						<i
+							on:click={() => (hidden8 = false)}
+							class="fa-regular fa-heart fa-2xl cursor-pointer"
+							id="heart"
+						/>
 					</div>
 
-					
-
 					<!---END  Favourite Drawer  -->
-
-
 
 					<NavLi href="/" class="flex flex-row items-center">
 						<UserCircleSolid class="mx-1" size="30" />
@@ -271,9 +252,8 @@
 				<Dropdown
 					triggeredBy="#nav-menu1"
 					class="z-20 w-52 overflow-y-auto overflow-x-hidden h-auto scrollbar-thumb-orange-600 scrollbar-track-gray-100 scrollbar-thin scrollbar-thumb-rounded-3xl scrollbar-track-rounded-3xl "
-				
 				>
-					{#each $categoryWritable.categories as category}
+					{#each $categoryStore.data as category}
 						<li class="rounded p-2 hover:bg-gray-100 dark:hover:bg-gray-600">
 							<Checkbox>{category.name}</Checkbox>
 						</li>
