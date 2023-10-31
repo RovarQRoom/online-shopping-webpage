@@ -1,5 +1,6 @@
 <script lang="ts">
 	import '../app.postcss';
+	import '../input.css';
 	import Footer from '../components/Footer.component.svelte';
 	import Navbar from '../components/Navbar.component.svelte';
 </script>

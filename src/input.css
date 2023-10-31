@@ -1,3 +1,82 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+:root {
+    --sc-color-rgb-light-50p: #3434348b !important;
+    --sc-color-rgb-light: ##fff !important;
+    --sc-color-hex-dark-50p: #f17f17 !important;
+    --sc-color-hex-dark: #fff !important;
+  }
+  
+  .sc-carousel__carousel-container {
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    align-items: center;
+    
+  }
+  .sc-carousel__content-container {
+    position: relative;
+    display: flex;
+    width: 100%;
+    
+  }
+  .sc-carousel__pages-window {
+    width: 100% !important;
+    
+    display: flex;
+    overflow: hidden;
+    box-sizing: border-box;
+    position: relative;
+  
+  }
+  .sc-carousel__pages-container {
+    width: 100%;
+    display: flex; /* to put child elements in one row */
+    transition-property: transform;
+    padding: 0px !important;
+  }
+  .sc-carousel__arrow-container {
+    padding: 5px;
+    box-sizing: border-box;
+    display: flex;
+    position: relative;
+    align-items: center;
+    justify-content: center;
+   position: relative;
+   
+  }
+  .sc-carousel-progress__container {
+    width: 100%;
+    height: 7px !important;
+    background-color: var(--sc-color-rgb-light-50p);
+    position: absolute;
+    bottom: 0;
+    backdrop-filter: blur(5px);
+    
+  }
+  :global(.sc-carousel-button) {
+    all: unset;
+    cursor: pointer;
+    
+  }
+  :global(.sc-carousel-button:focus) {
+    outline: 5px auto;
+    
+  }
+
+  
+  .sc-carousel-arrow__circle{
+    width: 40px !important;
+    height: 40px !important;
+    border-radius: 10px !important;
+    
+   
+  }
+
+  .sc-carousel-arrow__arrow{
+    width: 10px !important;
+    height: 10px !important;
+  }
