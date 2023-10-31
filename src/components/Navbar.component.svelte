@@ -31,6 +31,15 @@
 	import { onMount } from 'svelte';
 	import { sineIn, sineInOut } from 'svelte/easing';
 	import type { Items } from '$lib/Models';
+	import { page } from '$app/stores';
+	import { redirect } from '@sveltejs/kit';
+
+  let activeUrl:string;
+  $:activeUrl = $page.url.pathname;
+ 
+let activeClass = "text-[#f17f18]"
+let nonActiveClass = "text-black dark:text-white"
+
 
   let hidden8 = true;
   let transitionParamsBottom = {
@@ -54,6 +63,9 @@
 
 		await categoryStore.getAll();
 		await itemsStore.getAll(undefined, 'popularity', false);
+
+		console.log(activeUrl);
+		
 
 		// get all data into the cart
 		let saveData: any = localStorage.getItem('cart');
@@ -175,6 +187,7 @@
 		let:hidden
 		let:toggle
 		class="fixed z-30 top-0 backdrop-blur-lg bg-[#ffffffb3] dark:bg-[#212121b3]"
+		
 	>
 		<NavBrand href="/" class="w-full flex justify-center items-center">
 			<img src="/Images/kubak.logo.svg" class="mr-3 h-6 sm:h-9" alt="Kubak" />
@@ -186,7 +199,9 @@
 		</NavBrand>
 		<div class="flex items-center justify-between w-full flex-wrap md:flex-nowrap mt-5">
 			{#if screenWidth > 768}
-				<NavUl class="md:order-1  ">
+				<NavUl class="md:order-1 "
+				{activeUrl}{activeClass}{nonActiveClass}
+				>
 					<!---START  Favourite Drawer  -->
 
 					<div class="w-auto items-center justify-center">
@@ -246,24 +261,15 @@
 					</DarkMode>
 				</div>
 			</div>
-			<NavUl {hidden} class="w-full ">
-				<NavLi href="/" active={true}>Home</NavLi>
-				<NavLi id="nav-menu1" class="cursor-pointer"><Chevron aligned>Categories</Chevron></NavLi>
-				<Dropdown
-					triggeredBy="#nav-menu1"
-					class="z-20 w-52 overflow-y-auto overflow-x-hidden h-auto scrollbar-thumb-orange-600 scrollbar-track-gray-100 scrollbar-thin scrollbar-thumb-rounded-3xl scrollbar-track-rounded-3xl "
-				>
-					{#each $categoryStore.data as category}
-						<li class="rounded p-2 hover:bg-gray-100 dark:hover:bg-gray-600">
-							<Checkbox>{category.name}</Checkbox>
-						</li>
-					{/each}
-					<DropdownItem
-						slot="footer"
-						class="h-auto rounded-lg mx-2 text-center text-white cursor-pointer hover:bg-white dark:hover:bg-white hover:border-[#f17f18] bg-[#f17f18] hover:text-[#f17f18] dark:hover:text-[#f17f18] transition-all "
-						href="/search">Search</DropdownItem
-					>
-				</Dropdown>
+			<NavUl {hidden} {activeUrl} {activeClass} {nonActiveClass} class="w-full "
+			
+			>
+				<NavLi href="/">Home</NavLi>
+				<NavLi  id="nav-menu1" href="/category" class="cursor-pointer">
+					Categories
+					
+				</NavLi>
+				
 				<NavLi href="/services">Services</NavLi>
 				{#if screenWidth <= 768}
 					<NavLi href="/" class="flex flex-row items-center">

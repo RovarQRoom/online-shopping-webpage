@@ -1,4 +1,4 @@
-<script>
+<!-- <script>
 	import { categoryStore } from '$lib/store/firebase-store';
 	import { Card } from 'flowbite-svelte';
 </script>
@@ -22,4 +22,4 @@
 			</a>
 		</div>
 	</Card>
-{/each}
+{/each} -->
