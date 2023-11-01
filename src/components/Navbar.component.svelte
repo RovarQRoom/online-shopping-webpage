@@ -21,32 +21,26 @@
 		NavLi,
 		NavHamburger,
 		Search,
-		DarkMode,
-		Chevron,
-		Dropdown,
-		Checkbox,
-		DropdownItem
+		DarkMode
 	} from 'flowbite-svelte';
 	import { UserCircleSolid, CartOutline } from 'flowbite-svelte-icons';
 	import { onMount } from 'svelte';
 	import { sineIn, sineInOut } from 'svelte/easing';
 	import type { Items } from '$lib/Models';
 	import { page } from '$app/stores';
-	import { redirect } from '@sveltejs/kit';
 
-  let activeUrl:string;
-  $:activeUrl = $page.url.pathname;
- 
-let activeClass = "text-[#f17f18]"
-let nonActiveClass = "text-black dark:text-white"
+	$: activeUrl = $page.url.pathname;
 
+	const routes:string[] = ["/",'/category'];
 
-  let hidden8 = true;
-  let transitionParamsBottom = {
-    y: 320,
-    duration: 200,
-    easing: sineInOut
-  };
+	$: console.log('activeUrl', activeUrl);
+
+	let hidden8 = true;
+	let transitionParamsBottom = {
+		y: 320,
+		duration: 200,
+		easing: sineInOut
+	};
 
 	let hiddenDrawer: boolean = true;
 	let transitionParams = {
@@ -63,9 +57,6 @@ let nonActiveClass = "text-black dark:text-white"
 
 		await categoryStore.getAll();
 		await itemsStore.getAll(undefined, 'popularity', false);
-
-		console.log(activeUrl);
-		
 
 		// get all data into the cart
 		let saveData: any = localStorage.getItem('cart');
@@ -176,7 +167,14 @@ let nonActiveClass = "text-black dark:text-white"
 
 	<!---START Favourite Drawer-->
 
-	<Drawer class=" w-full h-full" placement="bottom" transitionType="fly" transitionParams={transitionParamsBottom} bind:hidden={hidden8} id="sidebar8">
+	<Drawer
+		class=" w-full h-full"
+		placement="bottom"
+		transitionType="fly"
+		transitionParams={transitionParamsBottom}
+		bind:hidden={hidden8}
+		id="sidebar8"
+	>
 		<CloseButton on:click={() => (hidden8 = true)} class="mb-4 dark:text-white" />
 		<div class="flex items-center h-full" />
 	</Drawer>
@@ -187,7 +185,6 @@ let nonActiveClass = "text-black dark:text-white"
 		let:hidden
 		let:toggle
 		class="fixed z-30 top-0 backdrop-blur-lg bg-[#ffffffb3] dark:bg-[#212121b3]"
-		
 	>
 		<NavBrand href="/" class="w-full flex justify-center items-center">
 			<img src="/Images/kubak.logo.svg" class="mr-3 h-6 sm:h-9" alt="Kubak" />
@@ -199,9 +196,7 @@ let nonActiveClass = "text-black dark:text-white"
 		</NavBrand>
 		<div class="flex items-center justify-between w-full flex-wrap md:flex-nowrap mt-5">
 			{#if screenWidth > 768}
-				<NavUl class="md:order-1 "
-				{activeUrl}{activeClass}{nonActiveClass}
-				>
+				<NavUl class="md:order-1">
 					<!---START  Favourite Drawer  -->
 
 					<div class="w-auto items-center justify-center">
@@ -261,15 +256,10 @@ let nonActiveClass = "text-black dark:text-white"
 					</DarkMode>
 				</div>
 			</div>
-			<NavUl {hidden} {activeUrl} {activeClass} {nonActiveClass} class="w-full "
-			
-			>
-				<NavLi href="/">Home</NavLi>
-				<NavLi  id="nav-menu1" href="/category" class="cursor-pointer">
-					Categories
-					
-				</NavLi>
-				
+			<NavUl {hidden}  class="w-full ">
+				<NavLi active={activeUrl === "/"} href="/">Home</NavLi>
+				<NavLi active={activeUrl === "/category"} id="nav-menu1" href="/category" class="cursor-pointer">Categories</NavLi>
+
 				<NavLi href="/services">Services</NavLi>
 				{#if screenWidth <= 768}
 					<NavLi href="/" class="flex flex-row items-center">

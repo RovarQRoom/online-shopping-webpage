@@ -10,8 +10,6 @@
 	let cardData: Cardd[];
 	let images: { id: number; name: string; imgurl: string; attribution: string }[];
 	onMount(async () => {
-		console.log('Carousel mounted');
-
 		cardData = (await cardsHandlers.getCards())?.cardsData ?? [];
 
 		images = cardData.map((card, index) => {
