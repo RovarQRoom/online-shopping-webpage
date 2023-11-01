@@ -31,10 +31,6 @@
 
 	$: activeUrl = $page.url.pathname;
 
-	const routes:string[] = ["/",'/category'];
-
-	$: console.log('activeUrl', activeUrl);
-
 	let hidden8 = true;
 	let transitionParamsBottom = {
 		y: 320,
@@ -256,9 +252,14 @@
 					</DarkMode>
 				</div>
 			</div>
-			<NavUl {hidden}  class="w-full ">
-				<NavLi active={activeUrl === "/"} href="/">Home</NavLi>
-				<NavLi active={activeUrl === "/category"} id="nav-menu1" href="/category" class="cursor-pointer">Categories</NavLi>
+			<NavUl {hidden} class="w-full ">
+				<NavLi active={activeUrl === '/'} href="/">Home</NavLi>
+				<NavLi
+					active={activeUrl === '/category'}
+					id="nav-menu1"
+					href="/category"
+					class="cursor-pointer">Categories</NavLi
+				>
 
 				<NavLi href="/services">Services</NavLi>
 				{#if screenWidth <= 768}
