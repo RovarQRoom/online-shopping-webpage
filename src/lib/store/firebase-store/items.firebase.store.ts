@@ -10,25 +10,36 @@ import {
 	type OrderByDirection
 } from 'firebase/firestore';
 import { writable } from 'svelte/store';
-import type { Items } from '$lib/Models';
 import { items_collection } from '$lib/firebase/firebase';
 import type { Store } from '$lib/Models/Requests/Store.request.model';
+import type { ItemsDto } from '$lib/Models/DTO/Items.dto.model';
 
 const itemsPerPage = 10;
 const collection = items_collection;
 
-export const createItemsStore = () => {
-	const { subscribe, set, update } = writable<Store<Items>>({ data: [], total: 0 });
+const createItemsStore = () => {
+	const { subscribe, set, update } = writable<Store<ItemsDto>>({ data: [], total: 0 });
 
 	return {
 		subscribe,
-		set: (value: Store<Items>) => set(value),
+		set: (value: Store<ItemsDto>) => set(value),
 		get: async (id: string) => {
 			try {
 				const docRef = doc(collection, id);
 				const docSnap = await getDoc(docRef);
 
-				return docSnap.data() as Items;
+				const dto:ItemsDto = {
+					id: docSnap.id,
+					name: docSnap.data()!.name,
+					price: docSnap.data()!.price,
+					detail: docSnap.data()!.detail,
+					popularity: docSnap.data()!.popularity,
+					production_date: docSnap.data()!.production_date,
+					expired_date: docSnap.data()!.expired_date,
+					item_image: docSnap.data()!.item_image,
+					categories: docSnap.data()!.categories
+				}
+				return dto;
 			} catch (e) {
 				console.log('Error :', e);
 			}
@@ -36,7 +47,7 @@ export const createItemsStore = () => {
 		getAll: async (page?: number, filter?: string, ascending?: boolean) => {
 			try {
 				// Initialize an empty array to store the item data
-				const itemData: Items[] = [];
+				const itemData: ItemsDto[] = [];
 
 				// Set the order condition based on the ascending parameter
 				const orderCondition: OrderByDirection = ascending ? 'asc' : 'desc';
@@ -79,10 +90,17 @@ export const createItemsStore = () => {
 					itemData.push(
 						Object.assign(
 							{
-								id: doc.id
-							},
-							doc.data()
-						) as Items
+								id: doc.id,
+								name: doc.data()!.name,
+								price: doc.data()!.price,
+								detail: doc.data()!.detail,
+								popularity: doc.data()!.popularity,
+								production_date: doc.data()!.production_date,
+								expired_date: doc.data()!.expired_date,
+								item_image: doc.data()!.item_image,
+								categories: doc.data()!.categories
+							}
+						) as ItemsDto
 					);
 				});
 
@@ -109,32 +127,6 @@ export const createItemsStore = () => {
 			const snapshot = await getDocs(querySnapshot);
 
 			return snapshot.size;
-		},
-		getItemsByPopularity: async () => {
-			try {
-				const itemsData: Items[] = [];
-				const querySnapshot = await getDocs(
-					query(
-						collection,
-						where('deleted_at', '==', null),
-						orderBy('popularity', 'desc'),
-						limit(5)
-					)
-				);
-				querySnapshot.forEach((doc) => {
-					itemsData.push(
-						Object.assign(
-							{
-								id: doc.id
-							},
-							doc.data()
-						) as Items
-					);
-				});
-				return itemsData;
-			} catch (e) {
-				console.log('Error :', e);
-			}
 		}
 	};
 };

@@ -1,7 +1,7 @@
 import type { Timestamp } from 'firebase/firestore';
 import type { Datetime } from './Extention/Datetime.extention.model';
 
-export interface Cardd extends Datetime {
+export interface Card extends Datetime {
 	id: string;
 	user_id: string;
 	webpage_url: string;

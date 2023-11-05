@@ -46,7 +46,7 @@
     align-items: center;
     justify-content: center;
    position: relative;
-   
+   display: none !important;
   }
   .sc-carousel-progress__container {
     width: 100%;
@@ -60,7 +60,7 @@
   :global(.sc-carousel-button) {
     all: unset;
     cursor: pointer;
-    
+    display: none !important;
   }
   :global(.sc-carousel-button:focus) {
     outline: 5px auto;

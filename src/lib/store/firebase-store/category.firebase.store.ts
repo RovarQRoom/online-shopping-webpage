@@ -17,7 +17,7 @@ import type { Store } from '$lib/Models/Requests/Store.request.model';
 const categoriesPerPage = 5;
 const collection = category_collection;
 
-export const createCategoryStore = () => {
+const createCategoryStore = () => {
 	const { subscribe, set, update } = writable<Store<Category>>({
 		data: [],
 		total: 0
