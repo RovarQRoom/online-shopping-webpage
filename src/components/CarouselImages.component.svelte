@@ -72,7 +72,7 @@
 	
 			<div class="flex justify-center items-center flex-col gap-2">
 				<p class="text-3xl md:text-5xl dark:text-white">Oil</p>
-					<p class="text-sm md:text-x dark:text-white underline">Shop Now</p>
+					<p class="text-sm md:text-xl dark:text-white underline">Shop Now</p>
 			</div>
 		</div>
 	</div>
@@ -85,7 +85,7 @@
 
 
 
-<div class=" w-full h-auto flex justify-center items-center gap-2 my-2 container mx-auto">
+<div class=" w-full h-auto flex justify-center items-center gap-2 my-2 md:mb-0 md:mt-2 container mx-auto">
 
 	<div class="w-full h-[200px] md:h-[250px] gap-4 bg-orange-200 dark:bg-orange-600 md:hidden flex justify-center items-center flex-col">
 		<div class="w-full h-auto flex flex-col gap-4 items-center hover:scale-[1.1] ease-in-out duration-[.4s]">
@@ -95,7 +95,7 @@
 	
 			<div class="flex justify-center items-center flex-col gap-2">
 				<p class="text-3xl mad:text-5xl dark:text-white">Jam</p>
-					<p class="text-sm md:text-x dark:text-white underline">Shop Now</p>
+					<p class="text-sm md:text-xl dark:text-white underline">Shop Now</p>
 			</div>
 		</div>
 	</div>
@@ -109,7 +109,7 @@
 	
 			<div class="flex justify-center items-center flex-col gap-2">
 				<p class="text-3xl dark:text-white">Oil</p>
-					<p class="text-sm md:text-x dark:text-white underline">Shop Now</p>
+					<p class="text-sm md:text-xl dark:text-white underline">Shop Now</p>
 			</div>
 		</div>
 	</div>
@@ -130,7 +130,7 @@
 
 <div class=" w-full h-auto flex justify-center items-center gap-2  container mx-auto">
 
-	<div class="w-3/12 h-[200px] md:h-[250px] gap-4 bg-orange-200 dark:bg-orange-600 hidden md:flex justify-center items-center flex-col">
+	<div class="w-3/12 h-[200px] md:h-[250px] gap-4 bg-orange-200 dark:bg-orange-600 hidden md:flex justify-center items-center flex-col ">
 		<div class="w-full h-auto flex flex-col gap-4 items-center hover:scale-[1.1] ease-in-out duration-[.4s]">
 
 

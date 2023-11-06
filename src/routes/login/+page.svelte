@@ -6,6 +6,7 @@
   
 	import { Avatar } from 'flowbite-svelte';
   import { Button, Modal } from 'flowbite-svelte';
+  import SvelteOtp from "@k4ung/svelte-otp";
   let defaultModal = false;
 
 
@@ -22,8 +23,10 @@ let userInput = "";
    
 
    
-  import SvelteOtp from "@k4ung/svelte-otp";
+ 
+  
 
+  
  
 </script>
 
@@ -53,6 +56,7 @@ let userInput = "";
       onKeyPress="if(this.value.length==11) return false;"
       required
       bind:value={userInput}
+     
       />
     </div>
   
