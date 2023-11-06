@@ -17,7 +17,7 @@
 
 let userInput = "";
   
-  $: buttonActive = userInput && userInput.length >= 10; 
+  $: buttonActive = userInput && userInput.length >= 11; 
 
    
 
@@ -31,7 +31,7 @@ let userInput = "";
   class="flex flex-col w-full bg-[#333333] h-screen justify-center items-center"
   id="particles-js"
 >
-  <div class="absolute w-5/6 md:w-3/6  h-[520px] shadow-2xl  py-10 rounded-xl flex flex-col justify-center items-center bg-gradient-to-r  from-[#00000018] to-[#212121b2] backdrop-blur-md">
+  <div class="absolute w-5/6 md:w-3/6 lg:w-4/12 gap-3 h-[520px] shadow-2xl  py-10 px-5 rounded-xl flex flex-col justify-center items-center bg-gradient-to-r  from-[#00000018] to-[#212121b2] backdrop-blur-md">
     <Avatar src="/Images/kubak.jpg" class="w-[180px] h-[180px] mb-11"  />
     <div class="  flex justify-center items-center">
       <!-- svelte-ignore missing-declaration -->
@@ -39,33 +39,28 @@ let userInput = "";
     <br
       class=" flex justify-center items-center w-full md:w-4/5 max-w-2xl my-11 rounded-lg px-3 py-5"
     >
-     <div class="flex justify-center items-center w-5/6 h-12 rounded-md gap-px">
+     <div class="flex justify-center items-center w-full h-12 rounded-md gap-px">
       <div class="w-[60px] md:w-[90px] flex justify-center items-center gap-2 bg-white rounded-md h-[50px] md:h-[55px]">
         <img src="/Images/iraq.png" alt="" class="w-4 md:w-8">
-        <p class="text-xs md:text-md">+964</p>
+      
 
       </div>
       <input
       type="tel"
       placeholder="Phone Number"
-      class="py-3 rounded-md  w-4/6 md:w-1/2 text-center text-md md:text-lg tracking-[.15em]"
+      class="py-3 rounded-md  w-full text-center text-md md:text-lg tracking-[.15em]"
       oninput="this.value = this.value.replace(/[^0-9]/g, '')"
-      onKeyPress="if(this.value.length==10) return false;"
+      onKeyPress="if(this.value.length==11) return false;"
       required
       bind:value={userInput}
       />
     </div>
-    <div class="w-4/6 md:w-1/2 flex justify-center items-center mt-3  ">
-
-      <button type="submit" disabled={!buttonActive} on:click={() => (defaultModal = true)}  id="submit-btn" class="w-full " 
-      >Send</button>
-    </div>
-        
-        
-    </div>
-
-    
+  
+    <button type="submit" disabled={!buttonActive} on:click={() => (defaultModal = true)}  id="submit-btn" class="w-full " 
+    >Send</button> 
+  </div>
 </div>
+
 
 
 
@@ -132,7 +127,7 @@ let userInput = "";
   box-shadow: inset -3px -3px 9px rgba(198, 147, 9, 0.25), inset 0px 3px 9px rgb(216, 138, 4), inset 0px 1px 1px rgba(255, 255, 255, 0.6), inset 0px -8px 36px rgba(0, 0, 0, 0.3), inset 0px 1px 5px rgba(255, 255, 255, 0.6), 2px 19px 31px rgba(0, 0, 0, 0.2);
   border-radius: 14px;
   font-weight: bold;
-  font-size: 16px;
+  
   transition: .3s ease-out;
   border: 0;
 
