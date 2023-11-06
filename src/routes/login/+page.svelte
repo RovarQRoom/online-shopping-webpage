@@ -48,16 +48,16 @@ let userInput = "";
       <input
       type="tel"
       placeholder="Phone Number"
-      class="py-3 rounded-md  w-4/6 text-center text-md md:text-lg tracking-[.28em]"
+      class="py-3 rounded-md  w-4/6 md:w-1/2 text-center text-md md:text-lg tracking-[.15em]"
       oninput="this.value = this.value.replace(/[^0-9]/g, '')"
       onKeyPress="if(this.value.length==10) return false;"
       required
       bind:value={userInput}
       />
     </div>
-    <div class="w-full flex justify-center items-center mt-3">
+    <div class="w-4/6 md:w-1/2 flex justify-center items-center mt-3  ">
 
-      <button type="submit" disabled={!buttonActive} on:click={() => (defaultModal = true)}  id="submit-btn" class="w-4/6 " 
+      <button type="submit" disabled={!buttonActive} on:click={() => (defaultModal = true)}  id="submit-btn" class="w-full " 
       >Send</button>
     </div>
         
@@ -77,8 +77,12 @@ let userInput = "";
   <SvelteOtp
   numberOnly
     inputClass="rounded-md bg-gray-200 "
-    separatorClass="border-blue-700 text-3xl font-bold "
+    separatorClass=" text-xl font-bold "
     separator="-"
+    inputStyle="width:35px; height:35px; border:2px solid #f17f18; color:#000;"
+    wrapperClass="flex justify-center"
+    numberOfInputs={6}
+    
   
 />
 </div>
@@ -112,7 +116,7 @@ let userInput = "";
   input:focus{
  outline: none !important; 
  border:2px solid #f17f18;
-    box-shadow: 0 0 12px #000000;
+
    
   }
 
@@ -144,6 +148,7 @@ button:hover{
   box-shadow: inset -3px -3px 9px rgba(198, 147, 9, 0.25), inset 0px 3px 9px rgb(255, 255, 255), inset 0px 1px 1px rgba(255, 255, 255, 0.6), inset 0px -8px 36px rgba(0, 0, 0, 0.3), inset 0px 1px 5px rgba(255, 255, 255, 0.6), 2px 19px 31px rgba(0, 0, 0, 0.2);
   color:#f17f18;
   transition: .3s ease-out;
+  box-shadow: 0 0 12px #000000;
 }
 
 
