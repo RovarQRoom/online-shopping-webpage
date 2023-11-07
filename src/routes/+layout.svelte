@@ -4,8 +4,17 @@
 	import Footer from '../components/Footer.component.svelte';
 	import Navbar from '../components/Navbar.component.svelte';
 	import { page } from '$app/stores';
+	import { onMount } from 'svelte';
+	import { authStore } from '$lib/store/firebase-store';
 
 	$: pathUrl = $page.url.pathname;
+
+	onMount(async () => {
+		await authStore.get();
+
+		console.log($authStore.data);
+		
+	});
 </script>
 
 {#if pathUrl != "/login"}

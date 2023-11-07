@@ -1,16 +1,31 @@
-<script>
+<script lang="ts">
 	//@ts-ignore
 	import SvelteOtp from '@k4ung/svelte-otp';
 	import { onMount } from 'svelte';
 	import { Avatar } from 'flowbite-svelte';
 	import { Button, Modal } from 'flowbite-svelte';
+	import { authStore } from '$lib/store/firebase-store';
+	import { account } from '$lib/appwrite/appwrite';
 	let defaultModal = false;
+	let secret: string = '';
+	let auth: string = '';
 
 	onMount(async () => {
 		particlesJS.load('particles-js', '/assets/particles.json');
 	});
 
 	let userInput = '';
+
+	async function authentication(phoneNumber: string) {
+		auth = await authStore.sign_up('+9647731554024');
+		if (auth) {
+			defaultModal = true;
+		}
+	}
+
+	async function verify(validation: string, secret: string) {
+		await authStore.sign_in(validation, secret);
+	}
 
 	$: buttonActive = userInput && userInput.length >= 11;
 </script>
@@ -49,7 +64,9 @@
 		<button
 			type="submit"
 			disabled={!buttonActive}
-			on:click={() => (defaultModal = true)}
+			on:click={() => {
+				authentication(userInput);
+			}}
 			id="submit-btn"
 			class="w-full">Send</button
 		>
@@ -66,6 +83,7 @@
 			separator="-"
 			inputStyle="width:35px; height:35px; border:2px solid #f17f18; color:#000;"
 			wrapperClass="flex justify-center"
+			bind:value={secret}
 			numberOfInputs={6}
 		/>
 	</div>
@@ -75,7 +93,8 @@
 			<button
 				type="submit"
 				id="submit-btn"
-				class="w-4/6 flex justify-center items-center text-center">Verify</button
+				class="w-4/6 flex justify-center items-center text-center"
+				on:click={() => verify(auth, secret)}>Verify</button
 			>
 		</div>
 	</svelte:fragment>
