@@ -40,7 +40,7 @@ let userInput = "";
       <!-- svelte-ignore missing-declaration -->
     </div>
     <br
-      class=" flex justify-center items-center w-full md:w-4/5 max-w-2xl my-11 rounded-lg px-3 py-5"
+      class=" flex justify-center items-center w-full md:w-4/5 max-w-2xl my-11 rounded-lg px-3 py-5 "
     >
      <div class="flex justify-center items-center w-full h-12 rounded-md gap-px">
       <div class="w-[60px] md:w-[90px] flex justify-center items-center gap-2 bg-white rounded-md h-[50px] md:h-[55px]">
@@ -51,7 +51,7 @@ let userInput = "";
       <input
       type="tel"
       placeholder="Phone Number"
-      class="py-3 rounded-md  w-full text-center text-md md:text-lg tracking-[.15em]"
+      class="py-3 font-bold rounded-md  w-full text-center text-md md:text-lg tracking-[.15em]"
       oninput="this.value = this.value.replace(/[^0-9]/g, '')"
       onKeyPress="if(this.value.length==11) return false;"
       required
@@ -70,13 +70,13 @@ let userInput = "";
 
 
 <Modal title="verification Your Phone Number"  bind:open={defaultModal} autoclose >
-  <p class="text-base leading-relaxed text-gray-500 dark:text-gray-400 text-center">phone number</p>
+  <p class="text-base leading-relaxed text-gray-500 dark:text-gray-400 text-center">OTP Number</p>
 <div class="w-full flex justify-center">
 
   <SvelteOtp
   numberOnly
     inputClass="rounded-md bg-gray-200 "
-    separatorClass=" text-xl font-bold "
+    separatorClass=" text-xl font-bold text-black rounded-full"
     separator="-"
     inputStyle="width:35px; height:35px; border:2px solid #f17f18; color:#000;"
     wrapperClass="flex justify-center"

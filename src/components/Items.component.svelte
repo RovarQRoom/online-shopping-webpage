@@ -111,7 +111,7 @@
 				<span class="text-md text-center font-medium">{items.price} IQD</span>
 			</div>
 			<div
-				class="flex justify-center bg-blue-400 bg-opacity-700 rounded-full items-center transition-all duration-500"
+				class="flex justify-center bg-[#f17f18] rounded-full items-center transition-all duration-500"
 				style="width: {$cartStore.some((i) => i.id === items.id) ? '75%' : '36px'}"
 			>
 				{#if $cartStore.some((i) => i.id === items.id)}
@@ -122,7 +122,7 @@
 							}}
 							class="justify-start p-2 text-white"
 							><PlusSolid
-								class="dark:hover:text-orange-500 hover:text-orange-600 text-white transition-all"
+								class="dark:hover:text-black hover:text-black text-white transition-all"
 							/></button
 						>
 						<span
@@ -135,7 +135,7 @@
 							}}
 							class="justify-end p-2"
 							><MinusSolid
-								class="dark:hover:text-orange-500 hover:text-orange-600 text-white transition-all"
+								class="dark:hover:text-black hover:text-black text-white transition-all"
 							/></button
 						>
 					</div>
@@ -146,7 +146,7 @@
 						}}
 						class="text-3xl font-boldflex justify-center p-2"
 						><PlusSolid
-							class="dark:hover:text-orange-500 hover:text-orange-600 text-white transition-all"
+							class="dark:hover:text-black hover:text-black text-white transition-all"
 						/></button
 					>
 				{/if}
