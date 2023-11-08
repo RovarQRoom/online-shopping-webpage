@@ -72,8 +72,8 @@ let userInput = "";
 
 
 
-<Modal title="verification Your Phone Number"  bind:open={defaultModal} autoclose >
-  <p class="text-base leading-relaxed text-gray-500 dark:text-gray-400 text-center">OTP Number</p>
+<Modal title="Phone Number Verification"  bind:open={defaultModal} autoclose >
+  <p class="text-xl leading-relaxed text-gray-500 dark:text-gray-400 text-center">OTP Number</p>
 <div class="w-full flex justify-center">
 
   <SvelteOtp
