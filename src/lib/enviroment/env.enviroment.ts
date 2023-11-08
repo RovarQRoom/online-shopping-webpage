@@ -35,3 +35,7 @@ ENVIROMENT.VITE_FIREBASE_CLOUD_MESSAGING_PUBLIC_KEY;
 export const firebase_cloud_messaging_vapid_key =
 	ENVIROMENT.VITE_FIREBASE_CLOUD_MESSAGING_SERVER_KEY;
 // End Firebase Config
+
+// Appwrite Config
+export const appwrite_endpoint = ENVIROMENT.VITE_APPWRITE_ENDPOINT;
+export const appwrite_project = ENVIROMENT.VITE_APPWRITE_PROJECT;

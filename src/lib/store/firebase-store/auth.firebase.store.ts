@@ -1,7 +1,6 @@
 import type { CreateUser } from '$lib/Models/Requests/User.request.model';
-import { auth, database } from '$lib/firebase/firebase';
-import { signInWithPhoneNumber, type ApplicationVerifier, type ConfirmationResult} from 'firebase/auth';
-import { collection, getDocs, limit, query, where } from 'firebase/firestore';
+import { account } from '$lib/appwrite/appwrite';
+import { ID } from 'appwrite';
 import { writable } from 'svelte/store';
 
 // Create a writable store with an initial value of null
@@ -12,63 +11,60 @@ const createAuthStore = () => {
 	return {
 		subscribe,
 		set: (value: CreateUser) => set(value),
-		sign_in: async (phoneNumber: string, applicationVerifier:ApplicationVerifier) => {
-			try{
-				let confirmationResult = await signInWithPhoneNumber(auth ,phoneNumber, applicationVerifier);
-				if (confirmationResult) {
-					set({
-						user: auth.currentUser,
-						confirmationResult: confirmationResult,
-						loading: false,
-						data: null,
-						errorMessage: null
-					});
-				}
-			}catch(e){
-				console.log("Error: ",e);
+		get: async () => {
+			const user_account = await account.get();
+			console.log('user_account: ', user_account);
+			const mapToUser = {
+				id: user_account.$id,
+				name: user_account.name,
+				email: user_account.email,
+				phone: user_account.phone,
+				gender: user_account.prefs.gender,
+				imgUrl: user_account.prefs.img_url,
+				birthday: user_account.prefs.birthday,
+				roles: user_account.labels
+			};
+			set({
+				data: mapToUser,
+				loading: false,
+				errorMessage: null
+			});
+		},
+		sign_in: async (userId: string, secret: string) => {
+			try {
+				await account.updatePhoneSession(userId, secret);
+			} catch (e) {
+				console.log('Error: ', e);
 			}
 		},
-		sign_out: async() => {
-			try{
-				await auth.signOut();
-				set({
-					user: null,
-					confirmationResult: undefined,
-					loading: false,
-					data: null,
-					errorMessage: null
-				});
-			}catch(e){
-				console.log("Error: ",e);
+		sign_up: async (phoneNumber: string) => {
+			try {
+				const sessionToken = await account.createPhoneSession(ID.unique(), phoneNumber);
+				const userId = sessionToken.userId;
+				return userId;
+			} catch (e) {
+				console.log('Error: ', e);
 			}
 		},
-		confirm: async (code: string, confirmationResult:ConfirmationResult) => {
-			try{
-				await confirmationResult.confirm(code);
-			}catch(e){
-				console.log("Error: ",e);
+		sign_out: async () => {
+			try {
+			} catch (e) {
+				console.log('Error: ', e);
 			}
 		},
-		get_user_by_phone_number: async (phoneNumber: string) => {
-			try{
-				const queryUsers = query(
-				collection(database, 'users'), 
-				where('phone', '==', phoneNumber),
-				limit(1)
-				);
-
-			const querySnapshot = await getDocs(queryUsers);
-
-			const user = querySnapshot.docs.map((doc) => {
-				return { ...doc.data(), id: doc.id };
-			})[0];
-
-			return user;
-		}catch(e){
-			console.log("Error: ",e);
+		confirm: async (code: string) => {
+			try {
+			} catch (e) {
+				console.log('Error: ', e);
+			}
+		},
+		get_user_by_id: async (userId: string) => {
+			try {
+			} catch (e) {
+				console.log('Error: ', e);
+			}
 		}
-	}
-	}
+	};
 };
 
 export const authStore = createAuthStore();
