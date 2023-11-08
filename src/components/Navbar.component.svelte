@@ -156,7 +156,7 @@
 		{/if}
 
 		<div class="grid gap-4">
-			<Button on:click={buyingItems}>Buy Now</Button>
+			<Button on:click={buyingItems} class="bg-[#f17f18] dark:bg-[#f17f18]">Buy Now</Button>
 		</div>
 	</Drawer>
 
@@ -194,24 +194,21 @@
 				<NavUl class="md:order-1">
 					<!---START  Favourite Drawer  -->
 
-					<div class="w-auto items-center justify-center">
+					<div class="w-[32px] h-[32px] items-center justify-center">
+						
 						<!-- svelte-ignore a11y-click-events-have-key-events -->
-						<!-- svelte-ignore a11y-no-static-element-interactions -->
-						<i
-							on:click={() => (hidden8 = false)}
-							class="fa-regular fa-heart fa-2xl cursor-pointer"
-							id="heart"
-						/>
+						<!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
+						<img src="/Images/lover.png" alt="favourite" width="32" height="32" on:click={() => (hidden8 = false)} id="heart">
 					</div>
 
 					<!---END  Favourite Drawer  -->
 
-					<NavLi href="/login" class="flex flex-row items-center">
-						<UserCircleSolid class="mx-1" size="30" />
+					<NavLi href="/login" class="flex flex-row items-center w-[35px] h-[35px]">
+						<img src="/Images/user-profile.png" alt="user" width="35" height="35">
 					</NavLi>
 					<button on:click={() => (hiddenDrawer = false)}>
-						<NavLi class="flex flex-row items-center">
-							<CartOutline class="mx-1" size="30" />
+						<NavLi class="flex flex-row items-center w-[30px] h-[30px]">
+							<img src="/Images/shopping-basket.png" alt="user" width="30" height="30">
 						</NavLi>
 					</button>
 				</NavUl>
@@ -252,7 +249,10 @@
 					</DarkMode>
 				</div>
 			</div>
-			<NavUl {hidden} class="w-full ">
+			<NavUl {hidden} class="w-full "
+			activeClass="dark:text-[#f17f18] text-[#f17f18]"
+	
+			>
 				<NavLi active={activeUrl === '/'} href="/">Home</NavLi>
 				<NavLi
 					active={activeUrl === '/category'}
@@ -263,14 +263,25 @@
 
 				<NavLi href="/services">Services</NavLi>
 				{#if screenWidth <= 768}
-					<NavLi href="/login" class="flex flex-row items-center">
-						<UserCircleSolid class="mx-1" size="25" />
+					<NavLi href="/login" class="flex flex-row items-center w-30 h-30 gap-3">
+						<img src="/Images/user-profile.png" alt="user" width="30" height="30">
 						Account
 					</NavLi>
+					<div class="w-30 h-30 flex items-center justify-start gap-3 p-3">
+						
+						<!-- svelte-ignore a11y-click-events-have-key-events -->
+						<!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
+						<img src="/Images/lover.png" alt="favourite" width="30" height="30" on:click={() => (hidden8 = false)} id="heart">
+                  
 
+						<!-- svelte-ignore a11y-click-events-have-key-events -->
+						<!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
+						<p on:click={() => (hidden8 = false)}>Favourites</p>
+				
+					</div>
 					<button on:click={() => (hiddenDrawer = false)}>
-						<NavLi class="flex flex-row items-center">
-							<CartOutline class="mx-1" size="25" />
+						<NavLi class="flex flex-row items-center w-[30] h-[30px] gap-3">
+							<img src="/Images/shopping-basket.png" alt="user" width="30" height="30">
 							Cart</NavLi
 						>
 					</button>
