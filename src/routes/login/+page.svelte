@@ -3,23 +3,32 @@
 	import SvelteOtp from '@k4ung/svelte-otp';
 	import { onMount } from 'svelte';
 	import { Avatar } from 'flowbite-svelte';
-	import { Button, Modal } from 'flowbite-svelte';
+	import { Modal } from 'flowbite-svelte';
 	import { authStore } from '$lib/store/firebase-store';
+	import {phone} from 'phone';
 	import { account } from '$lib/appwrite/appwrite';
+	import { goto } from '$app/navigation';
 	let defaultModal = false;
 	let secret: string = '';
 	let auth: string = '';
 
 	onMount(async () => {
 		particlesJS.load('particles-js', '/assets/particles.json');
+
+		if(await account.get()){
+			goto('/');
+		}
 	});
 
 	let userInput = '';
 
 	async function authentication(phoneNumber: string) {
-		auth = await authStore.sign_up('+9647731554024');
-		if (auth) {
-			defaultModal = true;
+		if(phone(phoneNumber,{country: 'IQ'}).isValid){
+			var validPhone = phone(phoneNumber,{country: 'IQ'}).phoneNumber;
+			auth = await authStore.sign_up(validPhone!);
+			if (auth) {
+				defaultModal = true;
+			}
 		}
 	}
 

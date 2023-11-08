@@ -45,6 +45,7 @@
 		"firebase": "^10.5.2",
 		"flowbite": "^1.8.1",
 		"flowbite-svelte": "^0.39.3",
+		"phone": "^3.1.41",
 		"reflect-metadata": "^0.1.13",
 		"tailwind-merge": "^1.14.0"
 	}

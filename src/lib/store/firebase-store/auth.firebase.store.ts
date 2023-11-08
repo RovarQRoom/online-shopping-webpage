@@ -13,6 +13,7 @@ const createAuthStore = () => {
 		set: (value: CreateUser) => set(value),
 		get: async () => {
 			const user_account = await account.get();
+			console.log('user_account: ', user_account);
 			const mapToUser = {
 				id: user_account.$id,
 				name: user_account.name,
@@ -28,8 +29,6 @@ const createAuthStore = () => {
 				loading: false,
 				errorMessage: null
 			});
-
-			return mapToUser;
 		},
 		sign_in: async (userId: string, secret: string) => {
 			try {
