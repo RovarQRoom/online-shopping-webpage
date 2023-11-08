@@ -76,6 +76,11 @@
 			};
 		}
 	});
+
+
+
+
+
 </script>
 
 {#if $cartStore}
@@ -84,7 +89,7 @@
 			class="m-2 w-44 h-auto md:w-64 flex flex-col justify-between border-black dark:border-white items-center rounded-2xl"
 			color="dark"
 		>
-			<div class="flex justify-start items-start w-full">
+			<div class="flex  justify-start items-start w-full">
 				<button on:click={() => toggleLike(items.id, items.name)}>
 					{#if favoriteItems.items_id.includes(items.id)}
 						<i class="fa-solid fa-heart fa-lg cursor-pointer text-red-600" id="heart" />

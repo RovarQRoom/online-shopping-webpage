@@ -4,8 +4,12 @@
 	import Footer from '../components/Footer.component.svelte';
 	import Navbar from '../components/Navbar.component.svelte';
 	import { page } from '$app/stores';
+	
 
 	$: pathUrl = $page.url.pathname;
+
+
+
 </script>
 
 {#if pathUrl != "/login"}

@@ -58,6 +58,9 @@ let userInput = "";
       bind:value={userInput}
      
       />
+
+
+     
     </div>
   
     <button type="submit" disabled={!buttonActive} on:click={() => (defaultModal = true)}  id="submit-btn" class="w-full " 
@@ -85,6 +88,12 @@ let userInput = "";
   
 />
 </div>
+
+<div class="w-full flex justify-center items-center ">
+
+  <p class="w-32 flex justify-center items-center underline mt-5 hover:text-[#f17f18] cursor-pointer">Resend Code</p>
+</div>
+
 
   <svelte:fragment slot="footer">
     <div class="w-full flex justify-center">

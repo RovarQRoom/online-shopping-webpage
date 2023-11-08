@@ -156,7 +156,7 @@
 		{/if}
 
 		<div class="grid gap-4">
-			<Button on:click={buyingItems}>Buy Now</Button>
+			<Button on:click={buyingItems} class="bg-[#f17f18] dark:bg-[#f17f18]">Buy Now</Button>
 		</div>
 	</Drawer>
 
@@ -249,7 +249,10 @@
 					</DarkMode>
 				</div>
 			</div>
-			<NavUl {hidden} class="w-full ">
+			<NavUl {hidden} class="w-full "
+			activeClass="dark:text-[#f17f18] text-[#f17f18]"
+	
+			>
 				<NavLi active={activeUrl === '/'} href="/">Home</NavLi>
 				<NavLi
 					active={activeUrl === '/category'}
