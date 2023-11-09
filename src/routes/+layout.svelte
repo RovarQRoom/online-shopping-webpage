@@ -19,7 +19,7 @@
 	});
 </script>
 
-{#if pathUrl != "/login"}
+{#if pathUrl != "/login" && pathUrl != "/registration"}
 <main class="bg-slate-100 dark:bg-gray-950 w-full h-full">
 	<Navbar />
 	<div>
