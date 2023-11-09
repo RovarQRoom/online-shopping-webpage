@@ -87,7 +87,7 @@
 	{#each $itemsStore.data as items}
 		<Card
 			class="m-2 w-44 h-auto md:w-64 flex flex-col justify-between border-black dark:border-white items-center rounded-2xl"
-			color="dark"
+			color="dark" data-aos="zoom-in"
 		>
 			<div class="flex  justify-start items-start w-full">
 				<button on:click={() => toggleLike(items.id, items.name)}>

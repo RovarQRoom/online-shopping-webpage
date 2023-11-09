@@ -23,6 +23,9 @@
 			};
 		});
 	});
+
+
+
 </script>
 
 {#if images}
@@ -50,7 +53,7 @@
 
 
 		<div class=" w-full h-auto flex justify-center items-center gap-2 container mx-auto">
-	<div class="w-full md:w-7/12 h-[200px] md:h-[250px] bg-gray-200 dark:dark:bg-gray-800  flex justify-around items-center ">
+	<div class="w-full md:w-7/12 h-[200px] md:h-[250px] bg-gray-200 dark:dark:bg-gray-800  flex justify-around items-center " data-aos="fade-up">
 		<div class="w-full h-auto flex justify-around items-center hover:scale-[1.1] ease-in-out duration-[.4s]">
 
 			<img src="/Images/rice.png" alt="" width="150px" >
@@ -64,7 +67,7 @@
 	</div>
 
 
-	<div class="mx-3 md:mx-0 w-3/12 h-[200px] md:h-[250px] gap-4 bg-orange-200 dark:bg-orange-600 hidden md:flex justify-center items-center flex-col">
+	<div class="mx-3 md:mx-0 w-3/12 h-[200px] md:h-[250px] gap-4 bg-orange-200 dark:bg-orange-600 hidden md:flex justify-center items-center flex-col" data-aos="fade-down">
 		<div class="w-full h-auto flex flex-col gap-4 items-center hover:scale-[1.1] ease-in-out duration-[.4s]">
 
 
@@ -87,7 +90,7 @@
 
 <div class=" w-full h-auto flex justify-center items-center gap-2 my-2 md:mb-0 md:mt-2 container mx-auto">
 
-	<div class="w-full h-[200px] md:h-[250px] gap-4 bg-orange-200 dark:bg-orange-600 md:hidden flex justify-center items-center flex-col">
+	<div class="w-full h-[200px] md:h-[250px] gap-4 bg-orange-200 dark:bg-orange-600 md:hidden flex justify-center items-center flex-col" data-aos="fade-up">
 		<div class="w-full h-auto flex flex-col gap-4 items-center hover:scale-[1.1] ease-in-out duration-[.4s]">
 
 
@@ -101,7 +104,7 @@
 	</div>
 	
 
-	<div class="w-full h-[200px] md:h-[250px] gap-4 bg-orange-200 dark:bg-orange-600 md:hidden flex justify-center items-center flex-col">
+	<div class="w-full h-[200px] md:h-[250px] gap-4 bg-orange-200 dark:bg-orange-600 md:hidden flex justify-center items-center flex-col" data-aos="fade-up">
 		<div class="w-full h-auto flex flex-col gap-4 items-center hover:scale-[1.1] ease-in-out duration-[.4s]">
 
 
@@ -130,7 +133,7 @@
 
 <div class=" w-full h-auto flex justify-center items-center gap-2  container mx-auto">
 
-	<div class="w-3/12 h-[200px] md:h-[250px] gap-4 bg-orange-200 dark:bg-orange-600 hidden md:flex justify-center items-center flex-col ">
+	<div class="w-3/12 h-[200px] md:h-[250px] gap-4 bg-orange-200 dark:bg-orange-600 hidden md:flex justify-center items-center flex-col " data-aos="fade-down">
 		<div class="w-full h-auto flex flex-col gap-4 items-center hover:scale-[1.1] ease-in-out duration-[.4s]">
 
 
@@ -144,7 +147,7 @@
 	</div>
 	
 
-	<div class="w-full md:w-7/12 h-[200px] md:h-[250px] bg-gray-200 dark:dark:bg-gray-800 flex justify-around items-center ">
+	<div class="w-full md:w-7/12 h-[200px] md:h-[250px] bg-gray-200 dark:dark:bg-gray-800 flex justify-around items-center " data-aos="fade-up" > 
 		<div class="w-full h-auto flex justify-around items-center hover:scale-[1.1] ease-in-out duration-[.4s]">
 
 			<img src="/Images/water.png" alt="" class="w-[150px] md:w-[200px]" >
