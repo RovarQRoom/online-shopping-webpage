@@ -35,6 +35,8 @@ const createAuthStore = () => {
 		sign_in: async (userId: string, secret: string) => {
 			try {
 				await account.updatePhoneSession(userId, secret);
+
+				return await account.get();
 			} catch (e) {
 				console.log('Error: ', e);
 			}

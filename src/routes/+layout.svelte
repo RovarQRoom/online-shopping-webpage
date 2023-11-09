@@ -5,32 +5,28 @@
 	import Navbar from '../components/Navbar.component.svelte';
 	import { page } from '$app/stores';
 	import { onMount } from 'svelte';
-	import { authStore} from '$lib/store/firebase-store';
 	import { ItemsStore } from '$lib/store/appwrite-store/items.store';
 
 	$: pathUrl = $page.url.pathname;
 
 	onMount(async () => {
-		await authStore.get();
 		await ItemsStore.getAll();
-		console.log($authStore.data);
-		console.log("Items Data ",$ItemsStore);
-		
+		console.log('Items Data ', $ItemsStore);
 	});
 </script>
 
-{#if pathUrl != "/login" && pathUrl != "/registration"}
-<main class="bg-slate-100 dark:bg-gray-950 w-full h-full">
-	<Navbar />
-	<div>
-		<slot />
-	</div>
-</main>
-<Footer />
+{#if pathUrl != '/login' && pathUrl != '/registration'}
+	<main class="bg-slate-100 dark:bg-gray-950 w-full h-full">
+		<Navbar />
+		<div>
+			<slot />
+		</div>
+	</main>
+	<Footer />
 {:else}
-<main class="bg-slate-100 dark:bg-gray-950 w-full h-full">
-	<div>
-		<slot />
-	</div>
-</main>
+	<main class="bg-slate-100 dark:bg-gray-950 w-full h-full">
+		<div>
+			<slot />
+		</div>
+	</main>
 {/if}

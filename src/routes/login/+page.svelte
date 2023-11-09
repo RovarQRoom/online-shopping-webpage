@@ -5,7 +5,7 @@
 	import { Avatar } from 'flowbite-svelte';
 	import { Modal } from 'flowbite-svelte';
 	import { authStore } from '$lib/store/firebase-store';
-	import {phone} from 'phone';
+	import { phone } from 'phone';
 	import { account } from '$lib/appwrite/appwrite';
 	import { goto } from '$app/navigation';
 	let defaultModal = false;
@@ -14,17 +14,14 @@
 
 	onMount(async () => {
 		particlesJS.load('particles-js', '/assets/particles.json');
-
-		if(await account.get()){
-			goto('/');
-		}
+		getUserData();
 	});
 
 	let userInput = '';
 
 	async function authentication(phoneNumber: string) {
-		if(phone(phoneNumber,{country: 'IQ'}).isValid){
-			var validPhone = phone(phoneNumber,{country: 'IQ'}).phoneNumber;
+		if (phone(phoneNumber, { country: 'IQ' }).isValid) {
+			var validPhone = phone(phoneNumber, { country: 'IQ' }).phoneNumber;
 			auth = await authStore.sign_up(validPhone!);
 			if (auth) {
 				defaultModal = true;
@@ -33,17 +30,38 @@
 	}
 
 	async function verify(validation: string, secret: string) {
-		await authStore.sign_in(validation, secret);
+		const user = await authStore.sign_in(validation, secret);
+
+		if(user){
+			if(user.name && user.prefs.gender){
+				goto('/');
+			}else{
+				goto('/registration');
+			}
+		}
 	}
 
 	$: buttonActive = userInput && userInput.length >= 11;
+
+	function getUserData() {
+		account.get().then((response) => {
+			if (response.name && response.prefs.gender) {
+				goto('/');
+			}else{
+				goto('/registration');
+			}
+		});
+	}
+
 </script>
 
 <div
 	class="flex flex-col w-full bg-[#333333] h-screen justify-center items-center"
 	id="particles-js"
 >
-	<div class="absolute w-5/6 md:w-3/6 lg:w-4/12 gap-3 h-[520px] shadow-2xl  py-10 px-5 rounded-xl flex flex-col justify-center items-center bg-gradient-to-r  from-[#00000018] to-[#212121b2] backdrop-blur-md">
+	<div
+		class="absolute w-5/6 md:w-3/6 lg:w-4/12 gap-3 h-[520px] shadow-2xl py-10 px-5 rounded-xl flex flex-col justify-center items-center bg-gradient-to-r from-[#00000018] to-[#212121b2] backdrop-blur-md"
+	>
 		<Avatar src="/Images/kubak.jpg" class="w-[180px] h-[180px] mb-11" />
 		<div class="  flex justify-center items-center">
 			<!-- svelte-ignore missing-declaration -->
@@ -80,8 +98,8 @@
 	</div>
 </div>
 
-<Modal title="Phone Number Verification"  bind:open={defaultModal} autoclose >
-  <p class="text-xl leading-relaxed text-gray-500 dark:text-gray-400 text-center">OTP Number</p>
+<Modal title="Phone Number Verification" bind:open={defaultModal} autoclose>
+	<p class="text-xl leading-relaxed text-gray-500 dark:text-gray-400 text-center">OTP Number</p>
 	<div class="w-full flex justify-center">
 		<SvelteOtp
 			numberOnly
@@ -94,11 +112,14 @@
 			numberOfInputs={6}
 		/>
 	</div>
-  
-  <div class="w-full flex justify-center items-center ">
 
-  <p class="w-32 flex justify-center items-center underline mt-5 hover:text-[#f17f18] cursor-pointer">Resend Code</p>
-</div>
+	<div class="w-full flex justify-center items-center">
+		<p
+			class="w-32 flex justify-center items-center underline mt-5 hover:text-[#f17f18] cursor-pointer"
+		>
+			Resend Code
+		</p>
+	</div>
 
 	<svelte:fragment slot="footer">
 		<div class="w-full flex justify-center">
