@@ -23,7 +23,6 @@
 		Search,
 		DarkMode
 	} from 'flowbite-svelte';
-	import { UserCircleSolid, CartOutline } from 'flowbite-svelte-icons';
 	import { onMount } from 'svelte';
 	import { sineIn, sineInOut } from 'svelte/easing';
 	import type { Items } from '$lib/Models';
@@ -40,7 +39,7 @@
 
 	let hiddenDrawer: boolean = true;
 	let transitionParams = {
-		x: -320,
+		x: 320,
 		duration: 200,
 		easing: sineIn
 	};
