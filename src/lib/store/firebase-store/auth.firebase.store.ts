@@ -1,5 +1,7 @@
+import type { RequestRegisterOptions } from '$lib/Models/Requests/Registeration.request.model';
 import type { CreateUser } from '$lib/Models/Requests/User.request.model';
 import { account } from '$lib/appwrite/appwrite';
+import { error } from '@sveltejs/kit';
 import { ID } from 'appwrite';
 import { writable } from 'svelte/store';
 
@@ -48,18 +50,30 @@ const createAuthStore = () => {
 		},
 		sign_out: async () => {
 			try {
+				await account.deleteSession('current');
 			} catch (e) {
 				console.log('Error: ', e);
 			}
 		},
-		confirm: async (code: string) => {
+		update_user: async (registerOptions: RequestRegisterOptions) => {
 			try {
-			} catch (e) {
-				console.log('Error: ', e);
-			}
-		},
-		get_user_by_id: async (userId: string) => {
-			try {
+				if(registerOptions.name){
+
+					await account.updateName(registerOptions.name);
+				}else{
+					return error(400,'Name is required');
+				}
+				if(registerOptions.gender){
+					await account.updatePrefs({gender:registerOptions.gender})
+				}else{
+					return error(400,"Gender is required");
+				}
+				if(registerOptions.birthday){
+					await account.updatePrefs({birthday:registerOptions.birthday})
+				}
+				if(registerOptions.imgUrl){
+					await account.updatePrefs({imgUrl:registerOptions.imgUrl})
+				}
 			} catch (e) {
 				console.log('Error: ', e);
 			}
