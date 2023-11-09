@@ -1,5 +1,5 @@
 import { appwrite_endpoint, appwrite_project } from '$lib/enviroment/env.enviroment';
-import { Account, Client } from 'appwrite';
+import { Account, Client, Databases } from 'appwrite';
 
 const client = new Client();
 
@@ -8,3 +8,4 @@ client
 .setProject(appwrite_project);
 
 export const account = new Account(client);
+export const databases = new Databases(client);

@@ -5,14 +5,20 @@
 	import Navbar from '../components/Navbar.component.svelte';
 	import { page } from '$app/stores';
 	import { onMount } from 'svelte';
-	import { authStore } from '$lib/store/firebase-store';
+	import { authStore} from '$lib/store/firebase-store';
+	import { Card } from 'flowbite-svelte';
+	import { cardsStore } from '$lib/store/appwrite-store/card.store';
+	import { categoryStore } from '$lib/store/appwrite-store/category.store';
+	import { favouriteStore } from '$lib/store/appwrite-store/favourite.store';
+	import { ItemsStore } from '$lib/store/appwrite-store/items.store';
 
 	$: pathUrl = $page.url.pathname;
 
 	onMount(async () => {
 		await authStore.get();
-
+		await ItemsStore.getAll();
 		console.log($authStore.data);
+		console.log("Items Data ",$ItemsStore);
 		
 	});
 </script>

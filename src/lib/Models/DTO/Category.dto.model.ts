@@ -4,3 +4,4 @@ export interface CategoryDto{
 	description: string;
 	category_image: string;
 }
+
