@@ -2,8 +2,6 @@
 	import CardsImagesCarousel from '../components/CarouselImages.component.svelte';
 	import SectionTitle from '../components/SectionTitle.component.svelte';
 	import Items from '../components/Items.component.svelte';
-	import { Button } from 'flowbite-svelte';
-	import { authStore } from '$lib/store/firebase-store';
 </script>
 <CardsImagesCarousel />
 <SectionTitle name="Popular Items" />
