@@ -3,7 +3,7 @@ import type { Category } from '../Category.model';
 
 export interface ItemsDto{
 	id: string;
-	categories: Category_Details[]
+	categories: Category_Details;
 	name: string;
 	price: number;
 	detail: string;
