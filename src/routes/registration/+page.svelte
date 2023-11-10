@@ -38,18 +38,18 @@ onMount(async () => {
 
 
 			<p class="text-start w-2/3 ">Name</p>
-			  <Input id="disabled-input" type="text" class="mb-6 w-2/3 "  />
+			  <Input id="disabled-input" type="text" class="mb-6 w-2/3 font-bold"  />
 
 
 			  <p class="text-start w-2/3 ">Gender</p>
-			  <select name="" id="" class="w-2/3 rounded-lg" >
+			  <select name="" id="" class="w-2/3 rounded-lg font-bold" >
 
 				  <option value="">Male</option>
 				  <option value="">Female</option>
 			  </select>
 
 			  <p class="text-start w-2/3 mt-6 ">Birthday</p>
-			  <Input id="date" type="date" class="mb-6 w-2/3 " />
+			  <Input id="date" type="date" class="mb-6 w-2/3 font-bold" />
 
 			  <button
 				type="submit"
@@ -117,7 +117,7 @@ onMount(async () => {
 			inset 0px 1px 5px rgba(255, 255, 255, 0.6), 2px 19px 31px rgba(0, 0, 0, 0.2);
 		color: #f17f18;
 		transition: 0.3s ease-out;
-		box-shadow: 0 0 12px #000000;
+		box-shadow: 0 15px 40px .5px  #00000030;
 	}
 
 
