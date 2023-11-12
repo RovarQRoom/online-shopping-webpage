@@ -1,4 +1,5 @@
 import type { ItemsDto } from '$lib/Models/DTO/Items.dto.model';
+import type { Items } from '$lib/Models/Entities/Items.entities.model';
 import type { Store } from '$lib/Models/Requests/Store.request.model';
 import { databases } from '$lib/appwrite/appwrite';
 import { writable } from 'svelte/store';
@@ -23,6 +24,7 @@ const createItemsStore = () => {
 			try {
 				let data = await databases.listDocuments('654b2f6a8af9b2ed391f', '654b2f8078d73f2fae55');
 				console.log('Hello There Data Card', data);
+
 
 				let dto: ItemsDto[] = data.documents.map((document) => {
 					return {
