@@ -45,7 +45,7 @@
 
 	function getUserData() {
 		account.get().then((response) => {
-			if (response.name && response.prefs.gender) {
+			if (response.name && response.prefs.gender != null) {
 				goto('/');
 			}else{
 				goto('/registration');

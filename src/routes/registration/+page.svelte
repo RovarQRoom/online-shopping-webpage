@@ -3,6 +3,7 @@
 	import { Label, Input } from 'flowbite-svelte';
 	import { Gender } from '$lib/Models/Enum/Gender.enum.model';
 	import type { RegisterOption } from '$lib/Models/Options/Register.option.model';
+	import { authStore } from '$lib/store/firebase-store';
 
 	let options: RegisterOption = {
 		name: '',
@@ -14,18 +15,22 @@
 	});
 
 	function handleFileChange(event: Event) {
-    const input = event.target as HTMLInputElement;
-    if (input.files && input.files.length > 0) {
-        const file = input.files[0];
-        if (file.type === "image/png" || file.type === "image/jpeg") {
-            const reader = new FileReader();
-            reader.onload = (e) => {
-                options.image = e.target!.result;
-            };
-            reader.readAsDataURL(file);
-        } 
-    }
-}
+		const input = event.target as HTMLInputElement;
+		if (input.files && input.files.length > 0) {
+			const file = input.files[0];
+			if (file.type === 'image/png' || file.type === 'image/jpeg') {
+				const reader = new FileReader();
+				reader.onload = (e) => {
+					options.image = e.target!.result;
+				};
+				reader.readAsDataURL(file);
+			}
+		}
+	}
+
+	async function update(register: RegisterOption) {
+		await authStore.update_user(register);
+	}
 </script>
 
 <div class="flex w-full bg-[#ffffff] h-screen justify-center items-center" id="particles-js">
@@ -42,9 +47,14 @@
 			<div class="w-full h-auto flex justify-center items-center">
 				<div
 					class="rounded-full relative flex justify-start w-40 h-40"
-					style="background-image: url({options.image ?? ""}); background-size: cover; border: 3px solid black; background-position: center; background-color: #ffffff;"
+					style="background-image: url({options.image ??
+						''}); background-size: cover; border: 1px solid black; background-position: center; background-color: #ffffff;"
 				/>
-				<div class="w-8 h-8 rounded-full bg-[#f17f18] absolute flex justify-center items-center hover:bg-black transition-all {options.image ? "opacity-0 hover:opacity-70 bg-black" : ""}">
+				<div
+					class="w-8 h-8 rounded-full bg-[#f17f18] absolute flex justify-center items-center hover:bg-black transition-all {options.image
+						? 'opacity-0 hover:opacity-70 bg-black'
+						: ''}"
+				>
 					<input
 						type="file"
 						class="absolute z-40 w-8 h-8 rounded-full opacity-0"
@@ -78,7 +88,7 @@
 				id="submit-btn"
 				class="w-2/3 flex justify-center items-center text-center"
 				on:click={() => {
-					console.log(options);
+					update(options);
 				}}>Register</button
 			>
 		</div>

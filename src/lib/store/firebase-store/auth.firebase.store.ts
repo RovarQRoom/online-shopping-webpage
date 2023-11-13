@@ -1,4 +1,4 @@
-import type { RequestRegisterOptions } from '$lib/Models/Requests/Registeration.request.model';
+import type { RegisterOption } from '$lib/Models/Options/Register.option.model';
 import type { CreateUser } from '$lib/Models/Requests/User.request.model';
 import { account } from '$lib/appwrite/appwrite';
 import { error } from '@sveltejs/kit';
@@ -37,6 +37,10 @@ const createAuthStore = () => {
 				await account.updatePhoneSession(userId, secret);
 
 				return await account.get();
+
+
+				
+
 			} catch (e) {
 				console.log('Error: ', e);
 			}
@@ -57,7 +61,7 @@ const createAuthStore = () => {
 				console.log('Error: ', e);
 			}
 		},
-		update_user: async (registerOptions: RequestRegisterOptions) => {
+		update_user: async (registerOptions: RegisterOption) => {
 			try {
 				if(registerOptions.name){
 
@@ -65,7 +69,7 @@ const createAuthStore = () => {
 				}else{
 					return error(400,'Name is required');
 				}
-				if(registerOptions.gender){
+				if(registerOptions.gender != null){
 					await account.updatePrefs({gender:registerOptions.gender})
 				}else{
 					return error(400,"Gender is required");
@@ -73,9 +77,11 @@ const createAuthStore = () => {
 				if(registerOptions.birthday){
 					await account.updatePrefs({birthday:registerOptions.birthday})
 				}
-				if(registerOptions.imgUrl){
-					await account.updatePrefs({imgUrl:registerOptions.imgUrl})
-				}
+				// if(registerOptions.image){
+				// 	await account.updatePrefs({imgUrl:registerOptions.image})
+				// }
+
+				await account.updatePrefs(registerOptions);
 			} catch (e) {
 				console.log('Error: ', e);
 			}
