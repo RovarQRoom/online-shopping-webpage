@@ -1,12 +1,8 @@
-export interface Categories {
+import type { Database } from "../Extention/Database.extention.model";
+
+export interface Categories extends Database {
     userId: string;
     name: string;
     description: string;
     categoryImage: string;
-    $id: string;
-    $createdAt: Date;
-    $updatedAt: Date;
-    $permissions: [];
-    $databaseId: string;
-    $collectionId: string;
   }

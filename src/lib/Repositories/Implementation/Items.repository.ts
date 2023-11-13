@@ -1,15 +1,25 @@
-import type { Items } from '$lib/Models';
+import type { Items } from '$lib/Models/Entities/Items.entities.model';
+import type { Result } from '$lib/Models/Results/Database.result.model';
 import { databases } from '$lib/appwrite/appwrite';
+import { appwrite_collection_item, appwrite_database } from '$lib/enviroment/env.enviroment';
 import type { IItemsRepository } from '../Interface/I.Items.repository';
 
-
 export class ItemsRepository implements IItemsRepository {
-    async getItems(): Promise<Items[]> {
-        let data = await databases.listDocuments('654b2f6a8af9b2ed391f', '654b2f8078d73f2fae55');
-        throw new Error('Method not implemented.');
-    }
-    async getItem(id: string): Promise<Items> {
-        throw new Error('Method not implemented.');
-    }
+	async getItems(): Promise<Result<Items>> {
+		let { documents, total } = (await databases.listDocuments(
+			appwrite_database,
+			appwrite_collection_item,
+		)) as AppwriteResponse<Items>;
 
+		return { documents, total };
+	}
+	async getItem(id: string): Promise<Items> {
+		let document = (await databases.getDocument(
+			appwrite_database,
+			appwrite_collection_item,
+			id
+		)) as Items;
+
+		return document;
+	}
 }

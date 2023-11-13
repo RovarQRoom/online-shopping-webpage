@@ -8,8 +8,8 @@ export interface ItemsDto{
 	price: number;
 	detail: string;
 	popularity: number;
-	production_date: Timestamp;
-	expired_date: Timestamp;
+	production_date: Date;
+	expired_date: Date;
 	item_image: string;
 	quantity:number;
 }

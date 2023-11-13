@@ -1,6 +1,7 @@
+import type { Database } from "../Extention/Database.extention.model";
 import type { Categories } from "./Categories.entity.model";
 
-export interface Items{
+export interface Items extends Database{
     userId: string;
     name: string;
     price: number;
@@ -10,11 +11,5 @@ export interface Items{
     quantity: number;
     detail: string;
     popularity: number;
-    $id: string;
-    $createdAt: Date;
-    $updatedAt: Date;
-    $permissions: [];
     category: Categories;
-    $databaseId: string;
-    $collectionId: string;
 }
