@@ -1,3 +1,4 @@
+import { databases } from "$lib/appwrite/appwrite";
 import { Client, Databases, ID } from "appwrite";
 
 

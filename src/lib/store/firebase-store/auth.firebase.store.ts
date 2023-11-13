@@ -4,6 +4,9 @@ import { account } from '$lib/appwrite/appwrite';
 import { error } from '@sveltejs/kit';
 import { ID } from 'appwrite';
 import { writable } from 'svelte/store';
+import { StorageRepository } from '../../Repositories/Implementation/Storage.repository';
+
+const storageRepository = new StorageRepository();
 
 // Create a writable store with an initial value of null
 export const userWritable = writable<CreateUser>();
@@ -69,19 +72,20 @@ const createAuthStore = () => {
 				}else{
 					return error(400,'Name is required');
 				}
-				if(registerOptions.gender != null){
-					await account.updatePrefs({gender:registerOptions.gender})
+				if(registerOptions.prefs.gender != null){
+					await account.updatePrefs({gender:registerOptions.prefs.gender})
 				}else{
 					return error(400,"Gender is required");
 				}
-				if(registerOptions.birthday){
-					await account.updatePrefs({birthday:registerOptions.birthday})
+				if(registerOptions.prefs.birthday){
+					await account.updatePrefs({birthday:registerOptions.prefs.birthday})
 				}
-				// if(registerOptions.image){
-				// 	await account.updatePrefs({imgUrl:registerOptions.image})
-				// }
+				if(registerOptions.prefs.image){
+					const image = await storageRepository.createFile(registerOptions.prefs.image as File);
+					registerOptions.prefs.image = await storageRepository.getFile(image.$id);
+				}
 
-				await account.updatePrefs(registerOptions);
+				await account.updatePrefs(registerOptions.prefs);
 			} catch (e) {
 				console.log('Error: ', e);
 			}

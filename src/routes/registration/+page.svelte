@@ -7,7 +7,9 @@
 
 	let options: RegisterOption = {
 		name: '',
-		gender: 0
+		prefs:{
+			gender:0
+		}
 	};
 
 	onMount(async () => {
@@ -21,7 +23,8 @@
 			if (file.type === 'image/png' || file.type === 'image/jpeg') {
 				const reader = new FileReader();
 				reader.onload = (e) => {
-					options.image = e.target!.result;
+					options.prefs.image = file;
+					options.imageArrayBuffer = e.target!.result as ArrayBuffer;
 				};
 				reader.readAsDataURL(file);
 			}
@@ -29,6 +32,7 @@
 	}
 
 	async function update(register: RegisterOption) {
+		register.userId = $authStore.data?.id;
 		await authStore.update_user(register);
 	}
 </script>
@@ -47,11 +51,11 @@
 			<div class="w-full h-auto flex justify-center items-center">
 				<div
 					class="rounded-full relative flex justify-start w-40 h-40"
-					style="background-image: url({options.image ??
+					style="background-image: url({options.imageArrayBuffer ??
 						''}); background-size: cover; border: 1px solid black; background-position: center; background-color: #ffffff;"
 				/>
 				<div
-					class="w-8 h-8 rounded-full bg-[#f17f18] absolute flex justify-center items-center hover:bg-black transition-all {options.image
+					class="w-8 h-8 rounded-full bg-[#f17f18] absolute flex justify-center items-center hover:bg-black transition-all {options.imageArrayBuffer
 						? 'opacity-0 hover:opacity-70 bg-black'
 						: ''}"
 				>
@@ -75,13 +79,13 @@
 			/>
 
 			<p class="text-start w-2/3">Gender</p>
-			<select bind:value={options.gender} name="" id="" class="w-2/3 rounded-lg font-bold">
+			<select bind:value={options.prefs.gender} name="" id="" class="w-2/3 rounded-lg font-bold">
 				<option value={Gender.Male}>Male</option>
 				<option value={Gender.Female}>Female</option>
 			</select>
 
 			<p class="text-start w-2/3 mt-6">Birthday</p>
-			<Input bind:value={options.birthday} id="date" type="date" class="mb-6 w-2/3 font-bold" />
+			<Input bind:value={options.prefs.birthday} id="date" type="date" class="mb-6 w-2/3 font-bold" />
 
 			<button
 				type="submit"

@@ -6,11 +6,12 @@
 	import { page } from '$app/stores';
 	import { onMount } from 'svelte';
 	import { ItemsStore } from '$lib/store/appwrite-store/items.store';
+	import { authStore } from '$lib/store/firebase-store';
 
 	$: pathUrl = $page.url.pathname;
 
 	onMount(async () => {
-		await ItemsStore.getAll();
+		await authStore.get();
 		console.log('Items Data ', $ItemsStore);
 	});
 </script>

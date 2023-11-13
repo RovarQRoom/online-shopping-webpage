@@ -1,6 +1,10 @@
 export interface RegisterOption {
+    userId?: string;
     name: string;
-    gender: number;
-    birthday?: string;
-    image?: string | ArrayBuffer | null;
+    prefs:{
+        gender: number;
+        birthday?: string;
+        image?: string | File | null;
+    }
+    imageArrayBuffer?: ArrayBuffer | null;
 }
