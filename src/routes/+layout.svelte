@@ -7,12 +7,14 @@
 	import { onMount } from 'svelte';
 	import { ItemsStore } from '$lib/store/appwrite-store/items.store';
 	import { authStore } from '$lib/store/firebase-store';
+	import { categoryStore } from '$lib/store/appwrite-store/category.store';
 
 	$: pathUrl = $page.url.pathname;
 
 	onMount(async () => {
 		await authStore.get();
-		console.log('Items Data ', $ItemsStore);
+		await categoryStore.getAll();
+		console.log('Items Data ', $categoryStore);
 	});
 </script>
 

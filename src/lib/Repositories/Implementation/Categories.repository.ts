@@ -1,7 +1,7 @@
 import type { Categories } from '$lib/Models/Entities/Categories.entity.model';
 import { databases } from '$lib/appwrite/appwrite';
 import { appwrite_database, appwrite_collection_category } from '$lib/enviroment/env.enviroment';
-import type { ICategoriesRepository } from '../Interface/I.Category.repository';
+import type { ICategoriesRepository } from '$lib/Repositories/Interface/I.Category.repository';
 
 export class CategoriesRepository implements ICategoriesRepository {
 	async getCategories(): Promise<AppwriteResponse<Categories>> {
