@@ -1,4 +1,4 @@
-import type { Datetime } from "./Extention/Datetime.extention.model";
+import type { Datetime } from "$lib/Models/Extensions/Datetime.Extention.Model";
 
 export interface Favorite extends Datetime {
     id: string;

@@ -1,6 +1,6 @@
-export interface CategoryDto{
-	id: string;
-	name: string;
-	category_image: string;
-}
 
+export interface CategoryDto {
+    id: string;
+    name: string;
+    categoryImage: string;
+}

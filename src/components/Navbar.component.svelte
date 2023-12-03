@@ -27,7 +27,7 @@
 	} from 'flowbite-svelte';
 	import { onMount } from 'svelte';
 	import { sineIn, sineInOut } from 'svelte/easing';
-	import type { Items } from '$lib/Models';
+	import type { ItemsDto } from '$lib/Models/DTO/Items.dto.model';
 	import { page } from '$app/stores';
 
 	$: activeUrl = $page.url.pathname;
@@ -58,8 +58,8 @@
 		// get all data into the cart
 		let saveData: any = localStorage.getItem('cart');
 		if (saveData) {
-			saveData = (JSON.parse(saveData ?? '') as Items[]) ?? [];
-			cartStore.get(saveData);
+			saveData = (JSON.parse(saveData ?? '') as ItemsDto[]) ?? [];
+			cartStore.set(saveData as ItemsDto[]);
 		}
 
 		cartStore.subscribe((value) => {
@@ -141,7 +141,7 @@
 					{#each $cartStore as item}
 						<TableBodyRow>
 							<TableBodyCell
-								><Avatar class="object-contain p-1" src={item.item_image} rounded /></TableBodyCell
+								><Avatar class="object-contain p-1" src={item.itemImage} rounded /></TableBodyCell
 							>
 							<TableBodyCell>{item.name}</TableBodyCell>
 							<TableBodyCell>{item.quantity}</TableBodyCell>
@@ -175,28 +175,7 @@
 	>
 		<CloseButton on:click={() => (hidden8 = true)} class="mb-4 dark:text-white" />
 
-		<div class="w-full h-auto container mx-auto flex justify-center items-center flex-wrap">
-			{#each $categoryStore.data as category}
-				<Card
-					class="m-2 rounded-2xl w-44 h-44 flex justify-center items-center flex-cols shadow-none border border-black dark:border-white hover:border-[#f17f18] dark:hover:border-[#f17f18] transition duration-300 ease-in-out"
-				>
-					<a href="/">
-						<img
-							class="rounded-t-lg object-cover p-3 w-40 h-32"
-							src={category.category_image}
-							alt="product 1"
-						/>
-					</a>
-					<div class=" flex justify-center">
-						<a href="/">
-							<h5 class="text-xl font-semibold text-gray-900 dark:text-white">
-								{category.name}
-							</h5>
-						</a>
-					</div>
-				</Card>
-			{/each}
-		</div>
+		
 	</Drawer>
 
 	<!---END Favourite Drawer-->

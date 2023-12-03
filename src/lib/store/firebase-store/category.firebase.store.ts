@@ -10,7 +10,7 @@ import {
 	type OrderByDirection,
 } from 'firebase/firestore';
 import { writable } from 'svelte/store';
-import type { Category } from '$lib/Models';
+import type { Category } from '$lib/Models/Entities/Categories.entity.model';
 import { category_collection } from '$lib/firebase/firebase';
 import type { Store } from '$lib/Models/Requests/Store.request.model';
 

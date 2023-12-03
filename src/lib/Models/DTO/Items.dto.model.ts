@@ -1,20 +1,15 @@
-import type { Timestamp } from 'firebase/firestore';
-import type { Category } from '../Category.model';
+import type { Datetime } from "$lib/Models/Extensions/Datetime.Extention.Model";
+import type { CategoryDto } from "$lib/Models/DTO/Category.dto.model";
 
-export interface ItemsDto{
+export interface ItemsDto extends Datetime{
 	id: string;
-	categories: Category_Details;
+	categories: CategoryDto[] | null;
 	name: string;
 	price: number;
 	detail: string;
 	popularity: number;
-	production_date: Date;
-	expired_date: Date;
-	item_image: string;
+	productionDate: Date;
+	expiredDate: Date;
+	itemImage: string;
 	quantity:number;
-}
-
-export interface Category_Details {
-	id: string;
-	label: string;
 }

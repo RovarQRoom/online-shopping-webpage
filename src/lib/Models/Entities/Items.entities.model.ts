@@ -1,7 +1,8 @@
-import type { Database } from "../Extention/Database.extention.model";
-import type { Categories } from "./Categories.entity.model";
+import type { Database } from "$lib/Models/Extensions/Database.Extention.Model";
+import type { Category } from "./Categories.entity.model";
 
 export interface Items extends Database{
+	category: Category[];
     userId: string;
     name: string;
     price: number;
@@ -11,5 +12,4 @@ export interface Items extends Database{
     quantity: number;
     detail: string;
     popularity: number;
-    category: Categories;
 }

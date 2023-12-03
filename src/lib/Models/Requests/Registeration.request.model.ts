@@ -1,4 +1,4 @@
-import type { Gender } from "../Enum/Gender.enum.model";
+import type { Gender } from "$lib/Models/Enum/Gender.enum.model";
 
 export interface RequestRegisterOptions{
     name:string;

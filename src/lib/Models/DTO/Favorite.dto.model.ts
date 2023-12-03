@@ -1,5 +1,6 @@
 export interface FavouriteDto {
+	itemsName: string[];
     id: string;
-    items_id: string[];
-    items_names: string[];
+    itemsId: string[];
+    itemsNames: string[];
 }

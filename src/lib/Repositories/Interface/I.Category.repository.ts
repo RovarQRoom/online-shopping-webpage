@@ -1,6 +1,6 @@
-import type { Categories } from "$lib/Models/Entities/Categories.entity.model";
+import type { Category } from "$lib/Models/Entities/Categories.entity.model";
 
 export interface ICategoriesRepository{
-    getCategories(): Promise<AppwriteResponse<Categories>>;
-    getCategory(id: string): Promise<Categories>;
+    getCategories(): Promise<AppwriteResponse<Category>>;
+    getCategory(id: string): Promise<Category>;
 }

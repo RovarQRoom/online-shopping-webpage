@@ -40,6 +40,8 @@ const createItemsStore = () => {
 				console.log('Error:', e);
 			}
 		}
+
+		
 	};
 };
 

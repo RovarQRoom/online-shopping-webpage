@@ -1,7 +1,9 @@
-import type { Database } from "../Extention/Database.extention.model";
+import type { Database } from "$lib/Models/Extensions/Database.Extention.Model";
 
-export interface Categories extends Database {
+export interface Category extends Database {
+	description: any;
     userId: string;
     name: string;
     categoryImage: string;
+    $deletedAt:Date;
   }

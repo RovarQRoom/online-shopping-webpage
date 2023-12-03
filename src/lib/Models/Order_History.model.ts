@@ -1,6 +1,6 @@
 import type { Orders } from './Order.model';
 import type { Order_Items } from './Order_Items.model';
-import type { Datetime } from './Extention/Datetime.extention.model';
+import type { Datetime } from '$lib/Models/Extensions/Datetime.Extention.Model';
 
 export interface Orders_History extends Datetime {
 	id: string;

@@ -23,11 +23,11 @@ const createFavouriteStore = () => {
 			let data = await databases.getDocument("654b2f6a8af9b2ed391f","654b336d304a52b54f08","654b705f12636aed6717");
 			console.log("Hello There Data favourite",data);
                 let dto:FavouriteDto = {
-                    id:data.$id,
-                    items_id:data.itemsId,
-                    items_names:data.itemsName
-                }
-            
+					id: data.$id,
+					itemsId: data.itemsId,
+					itemsNames: data.itemsName,
+					itemsName: []
+				}
 				
             set(dto);
 			} catch (e) {

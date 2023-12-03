@@ -1,14 +1,14 @@
-import type { Items } from '$lib/Models';
+import type { ItemsDto } from '$lib/Models/DTO/Items.dto.model';
 import { writable } from 'svelte/store';
 
 export const createCartStore = () => {
-	const { subscribe, set, update } = writable<Items[]>([]);
+	const { subscribe, set, update } = writable<ItemsDto[]>([]);
 
 	return {
 		subscribe,
-		set: (value: Items[]) => set(value),
+		set: (value: ItemsDto[]) => set(value),
 		// add an item to the cart
-		add: (item: Items) => {
+		add: (item: ItemsDto) => {
 			update((value) => {
 				// check if the item already exists in the cart
 				const existingItem = value.find((i) => i.id === item.id);
@@ -23,7 +23,7 @@ export const createCartStore = () => {
 			});
 		},
 		// remove an item from the cart
-		remove: (item: Items) => {
+		remove: (item: ItemsDto) => {
 			update((value) => {
 				// find the index of the item in the cart
 				const index = value.findIndex((i) => i.id === item.id);
@@ -54,7 +54,7 @@ export const createCartStore = () => {
 		clear: () => {
 			set([]);
 		},
-		get: (items: Items[]) => {
+		get: (items: ItemsDto[]) => {
 			set(items);
 		}
 	};

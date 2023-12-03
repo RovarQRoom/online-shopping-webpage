@@ -1,7 +1,11 @@
 import type { CardDto } from "$lib/Models/DTO/Card.dto.model";
 import type { Store } from "$lib/Models/Requests/Store.request.model";
+import { CardRepository } from "$lib/Repositories/Implementation/Cards.Repository";
 import { databases } from "$lib/appwrite/appwrite";
+import { Query } from "appwrite";
 import { writable } from "svelte/store";
+
+const cardsRepository = new CardRepository();
 
 const createCartsStore = () => {
 	// Create a writable store with an initial value of null
@@ -22,19 +26,18 @@ const createCartsStore = () => {
 		},
 		getAll: async (page?: number, filter?: string, ascending?: boolean) => {
 			try {
-			let data = await databases.listDocuments("654b2f6a8af9b2ed391f","654b3405853b2ef8aa7e");
-			console.log("Hello There Data Card",data);
+			let {documents,total} = await cardsRepository.getCards();
+			console.log("Hello There Data Card",documents);
 			
-            let dto:CardDto[] = data.documents.map(document=>{
+            let dto:CardDto[] = documents.map(document=>{
                 return{
-                    id:document.$id,
-                    webpage_url:document.webpageUrl,
-                    image_url:document.imageUrl,
-                    expiration_date:document.expirationDate
+					id:document.$id as string,
+                    webpageUrl:document.webpageUrl as string,
+                    cardImage:document.cardImage,
                 }
 				
             });
-            set({data:dto,total:data.total});
+            set({data:dto,total});
 			} catch (e) {
 				console.log('Error:', e);
 			}
