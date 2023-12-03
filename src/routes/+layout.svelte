@@ -8,16 +8,28 @@
 	import { ItemsStore } from '$lib/store/appwrite-store/items.store';
 	import { authStore } from '$lib/store/firebase-store';
 	import { categoryStore } from '$lib/store/appwrite-store/category.store';
+	import { Img, Spinner } from 'flowbite-svelte';
 
 	$: pathUrl = $page.url.pathname;
-
+	let loading = true;
 	onMount(async () => {
-		await authStore.get();
-		await categoryStore.getAll();
-		console.log('Items Data ', $categoryStore);
+		try {
+			await authStore.get();
+			await categoryStore.getAll();
+			await ItemsStore.getAll();
+			console.log('Items Data ', $categoryStore);
+		} finally {
+			loading = false;
+		}
 	});
+	
 </script>
+{#if loading}
+<div class="flex justify-center items-center w-full h-screen">
 
+	<Img src="Images/kubak_loading.gif" class="object-fit"/>
+</div>
+{:else} 
 {#if pathUrl != '/login' && pathUrl != '/registration'}
 	<main class="bg-slate-100 dark:bg-gray-950 w-full h-full">
 		<Navbar />
@@ -32,4 +44,5 @@
 			<slot />
 		</div>
 	</main>
+{/if}
 {/if}

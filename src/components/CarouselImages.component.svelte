@@ -25,7 +25,7 @@
 	{#if browser}
 		<div class="w-full h-auto flex items-center flex-col md:flex-row mt-[110px] md:mt-[140px]">
 			<div class="w-full">
-				<Carousel autoplay autoplayDuration={5000} autoplayProgressVisible class="w-full ">
+				<Carousel autoplay autoplayDuration={7000} autoplayProgressVisible class="w-full ">
 					{#each images as image}
 						<img src={image.imgurl} alt="" class="object-cover w-full h-[35rem]" />
 					{/each}
